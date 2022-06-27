@@ -13,40 +13,54 @@ function sideBar() {
 </script>
 
 <template>
-  <header>
-    <fa class="menu" icon="bars" @click="sideBar()" />
-    <div class="wrapper" :class="{ hideLeft: !state.showSideBar }">
-      <fa class="close" icon="x" @click="sideBar()" />
-      <nav class="nav">
-        <RouterLink to="/">Recipe Search</RouterLink>
-        <RouterLink to="/about">Saved Recipes</RouterLink>
-        <router-link to="/about">Shopping list</router-link>
-      </nav>
-    </div>
-  </header>
+  <fa class="menu-main" icon="bars" @click="sideBar()" />
+  <div class="wrapper-main" :class="{ hideLeftMain: !state.showSideBar }">
+    <fa class="close-main" icon="x" @click="sideBar()" />
+    <nav class="nav-main">
+      <RouterLink to="/">Recipe Search</RouterLink>
+      <RouterLink to="/about">Saved Recipes</RouterLink>
+      <router-link to="/about">Shopping List</router-link>
+    </nav>
+  </div>
 
   <RouterView />
 </template>
 
-<style scoped lang="scss">
-.wrapper {
-  background-color: rgb(200, 50, 50);
+<style lang="scss">
+@import "./assets/variables.scss";
+
+.wrapper-main {
+  background-color: $main-color;
   width: 300px;
   height: 100vh;
-  position: relative;
+  position: absolute;
   transition: 0.5s;
+
+  @include media {
+    width: 100vw;
+    height: 75px;
+  }
 }
-.hideLeft {
+.hideLeftMain {
   transform: translateX(-350px);
+
+  @include media {
+    transform: translateX(0px);
+  }
 }
-.menu {
+.menu-main {
   position: absolute;
   left: 15px;
   top: 15px;
   width: 40px;
   height: 40px;
+  color: $main-color;
+
+  @include media {
+    display: none;
+  }
 }
-.nav {
+.nav-main {
   display: flex;
   flex-direction: column;
   height: 300px;
@@ -59,17 +73,27 @@ function sideBar() {
   padding: 1rem;
 
   & * {
-    color: rgb(230, 219, 219);
+    color: $main-color2;
     text-decoration: none;
     font-weight: 700;
   }
+
+  @include media {
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+  }
 }
-.close {
-  color: rgb(230, 219, 219);
+.close-main {
+  color: $main-color2;
   position: absolute;
   right: 15px;
   top: 15px;
   width: 30px;
   height: 30px;
+
+  @include media {
+    display: none;
+  }
 }
 </style>

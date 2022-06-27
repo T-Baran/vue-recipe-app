@@ -1,0 +1,10 @@
+$main-color: rgb(200, 50, 50);
+$main-color2: rgb(230, 219, 219);
+$main-color3: rgb(108, 108, 108);
+$side-color: rgb(54, 54, 54);
+
+@mixin media {
+  @media (min-width: 1000px) {
+    @content;
+  }
+}
