@@ -11,6 +11,7 @@ const state = reactive({
     showAppetizers: false,
     showEntrees: true,
     showDesserts: false,
+    showSearch: false,
   },
 });
 
@@ -32,12 +33,18 @@ console.log(recipeStore.recipesData);
   <header>
     <p></p>
     <p class="title">Search Recipe</p>
-    <fa class="icon" icon="magnifying-glass" />
+    <fa
+      @click="state.showSearch = !state.showSearch"
+      class="icon"
+      icon="magnifying-glass"
+    />
   </header>
 
   <main>
-    <SearchBar />
-    <div class="basic-menu">
+    <div v-if="state.showSearch" class="search-bar">
+      <SearchBar />
+    </div>
+    <div v-if="!state.showSearch" class="basic-menu">
       <button
         :class="{ underline: state.startingMenu.showAppetizers }"
         @click="
@@ -60,6 +67,7 @@ console.log(recipeStore.recipesData);
       </button>
     </div>
     <RecipeComponent
+      v-if="!state.showSearch"
       v-for="item in recipeStore.recipesData.hits"
       :data="item"
     />
@@ -76,6 +84,10 @@ header {
   height: 70px;
   padding-inline: 2rem;
   color: $main-color;
+}
+.search-bar {
+  width: 80vw;
+  margin-inline: auto;
 }
 .title {
   font-size: 30px;
