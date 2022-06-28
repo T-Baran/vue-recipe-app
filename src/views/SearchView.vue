@@ -1,7 +1,9 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, onBeforeMount } from "vue";
 import { useRecipeStore } from "../stores/recipes";
-import data from "../assets/recipes.json";
+import RecipeComponent from "../components/RecipeComponent.vue";
+import SearchBar from "../components/SearchBar.vue";
+
 const recipeStore = useRecipeStore();
 
 const state = reactive({
@@ -18,6 +20,12 @@ function chooseMenu(name) {
   state.startingMenu.showDesserts = false;
   state.startingMenu[name] = true;
 }
+
+onBeforeMount(() => {
+  recipeStore.fetchRecipe("entrees");
+});
+
+console.log(recipeStore.recipesData);
 </script>
 
 <template>
@@ -28,26 +36,33 @@ function chooseMenu(name) {
   </header>
 
   <main>
+    <SearchBar />
     <div class="basic-menu">
       <button
         :class="{ underline: state.startingMenu.showAppetizers }"
-        @click="chooseMenu('showAppetizers')"
+        @click="
+          chooseMenu('showAppetizers'), recipeStore.fetchRecipe('appetizer')
+        "
       >
         Appetizers
       </button>
       <button
         :class="{ underline: state.startingMenu.showEntrees }"
-        @click="chooseMenu('showEntrees')"
+        @click="chooseMenu('showEntrees'), recipeStore.fetchRecipe('entrees')"
       >
         Entrees
       </button>
       <button
         :class="{ underline: state.startingMenu.showDesserts }"
-        @click="chooseMenu('showDesserts')"
+        @click="chooseMenu('showDesserts'), recipeStore.fetchRecipe('dessert')"
       >
         Desserts
       </button>
     </div>
+    <RecipeComponent
+      v-for="item in recipeStore.recipesData.hits"
+      :data="item"
+    />
   </main>
 </template>
 
