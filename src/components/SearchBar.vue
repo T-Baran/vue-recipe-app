@@ -1,16 +1,50 @@
 <script setup>
 import FilterOptions from "./FilterOptions.vue";
+import RecipeComponent from "./RecipeComponent.vue";
+import { reactive } from "vue";
+import { useRecipeStore } from "../stores/recipes";
+
+const recipeStore = useRecipeStore();
+
+const state = reactive({
+  showFilter: false,
+  searchValue: "",
+  showRecipes: false,
+});
+
+function searchRecipe() {
+  recipeStore.fetchRecipe(state.searchValue);
+  state.searchValue = "";
+  state.showRecipes = true;
+}
 </script>
 <template>
   <form>
-    <input type="text" />
-    <p class="filters">
+    <input type="text" v-model="state.searchValue" />
+    <p
+      @click="state.showFilter = !state.showFilter"
+      v-if="!state.showFilter"
+      class="filters"
+    >
       Show filters
       <fa icon="angles-down" />
     </p>
-    <FilterOptions />
-    <button class="submit" type="submit">Search</button>
+    <p @click="state.showFilter = !state.showFilter" v-else class="filters">
+      Hide filters
+      <fa icon="angles-up" />
+    </p>
+    <FilterOptions v-if="state.showFilter" />
+
+    <button @click.prevent="searchRecipe()" class="submit" type="submit">
+      Search
+    </button>
   </form>
+  <div v-if="state.showRecipes" class="recipes">
+    <RecipeComponent
+      v-for="item in recipeStore.recipesData.hits"
+      :data="item"
+    />
+  </div>
 </template>
 <style scoped lang="scss">
 @import "../assets/variables.scss";
@@ -49,5 +83,6 @@ input {
   padding: 0.5rem 1rem;
   border-radius: 10px;
   letter-spacing: 2px;
+  margin-bottom: 2rem;
 }
 </style>

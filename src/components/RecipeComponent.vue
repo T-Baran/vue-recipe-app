@@ -35,7 +35,7 @@ console.log(props.data.recipe);
       </div>
       <button class="seeMore">
         <a target="_blank" :href="props.data.recipe.url"
-          >Click for detailed instruction</a
+          >Click for detailed instructions</a
         >
       </button>
     </div>
@@ -62,6 +62,7 @@ console.log(props.data.recipe);
 .recipe-image {
   width: 300px;
   height: 300px;
+  font-size: 0px;
 }
 .recipe-label {
   text-align: center;

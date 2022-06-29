@@ -1,76 +1,53 @@
 <script setup>
 import { reactive } from "vue";
 import { useRecipeStore } from "../stores/recipes";
+import FilterItem from "./FilterItem.vue";
 
 const recipeStore = useRecipeStore();
 
 const dietType = [
-  "balanced",
-  "high-fiber",
-  "high-protein",
-  "low-carb",
-  "low-fat",
-  "low-sodium",
+  "Balanced",
+  "High-fiber",
+  "High-protein",
+  "Low-carb",
+  "Low-fat",
+  "Low-sodium",
 ];
-
-function print() {
-  console.log(recipeStore.calculateFilter);
-}
-// const state = reactive({
-//   checkbox: [],
-// });
+const cuisineType = [
+  "American",
+  "Asian",
+  "Chinese",
+  "Indian",
+  "Italian",
+  "Japanese",
+  "Mexican",
+  "Caribbean",
+];
+const mealType = ["Breakfast", "Dinner", "Lunch", "Snack"];
+// function print() {
+//   console.log(recipeStore.calculateFilter);
+// }
 </script>
 <template>
-  <div class="container">
-    <p class="title">Diet type</p>
-    <div v-for="diet in dietType" class="diet-type">
-      <label :for="diet">{{ diet }}</label>
-      <input
-        class="checkbox"
-        :value="diet"
-        v-model="recipeStore.dietType"
-        type="checkbox"
-        :id="diet"
-      />
-    </div>
+  <FilterItem title="Diet Type" :data="dietType" route="dietType" />
 
-    <p @click="print()">
-      <!-- {{ recipeStore.dietType }} -->
-    </p>
-  </div>
+  <FilterItem title="Cuisine Type" :data="cuisineType" route="cuisineType" />
+
+  <FilterItem title="Meal Type" :data="mealType" route="mealType" />
+
+  <button @click.prevent="recipeStore.clearAll()">Clear all</button>
 </template>
 <style scoped lang="scss">
 @import "../assets/variables.scss";
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-
-  & > * {
-    color: $main-color3;
-  }
-}
-.title {
-  grid-column: 1/3;
-  justify-self: center;
-  color: $main-color;
-  font-size: 24px;
-  margin-bottom: 1rem;
-}
-
-.diet-type {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-}
-/* .checkbox { */
-/* appearance: none;
-  -webkit-appearance: none;
-  background-color: inherit;
-  height: 40px;
-  width: 40px;
+button {
+  border: none;
   background-color: $main-color;
-  border-radius: 5px;
-  cursor: pointer;
-} */
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  letter-spacing: 2px;
+  margin-inline: auto;
+}
 </style>
