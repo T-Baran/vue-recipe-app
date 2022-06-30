@@ -1,11 +1,41 @@
 <script setup>
+import { reactive, onMounted } from "vue";
+import { useRecipeStore } from "../stores/recipes";
+
+const recipeStore = useRecipeStore();
+
+const state = reactive({
+  like: false,
+});
+
 const props = defineProps({
   data: Object,
 });
-console.log(props.data.recipe);
+
+function addToLiked() {
+  if (state.like) {
+    state.like = false;
+    recipeStore.removeFromLiked(props.data._links.self.href);
+  } else {
+    state.like = true;
+    recipeStore.addToLiked(
+      props.data.recipe.label,
+      props.data._links.self.href
+    );
+  }
+}
+
+console.log(props.data.recipe.imaages);
 </script>
 <template>
   <div class="container">
+    <button
+      @click="addToLiked()"
+      :class="{ liked: state.like }"
+      class="like-button"
+    >
+      <fa icon="heart" />
+    </button>
     <img
       class="recipe-image"
       :src="props.data.recipe.images.REGULAR.url"
@@ -51,6 +81,30 @@ console.log(props.data.recipe);
   border-radius: 25px;
   margin-bottom: 2rem;
   overflow: hidden;
+  position: relative;
+}
+.like-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+  transition: 0.3s;
+  & > * {
+    width: 60%;
+    height: 60%;
+  }
+}
+
+.liked {
+  background-color: $main-color;
 }
 .data-container {
   display: flex;

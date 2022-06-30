@@ -58,6 +58,7 @@ const recipeStore = useRecipeStore();
   border: 2px solid $main-color;
   border-radius: 5px;
   cursor: pointer;
+  transition: 0.3s;
 }
 .checkbox:checked {
   background-color: $main-color;

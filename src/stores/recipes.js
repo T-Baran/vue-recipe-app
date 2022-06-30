@@ -1,8 +1,13 @@
 import { defineStore } from "pinia";
+import { useLocalStorage } from "@vueuse/core";
 
 export const useRecipeStore = defineStore({
   id: "recipes",
   state: () => ({
+    saved: useLocalStorage("saved", {
+      saved: [],
+    }),
+    // liked: [],
     recipesData: {},
     dietType: [],
     cuisineType: [],
@@ -32,12 +37,13 @@ export const useRecipeStore = defineStore({
       const id = "5203a72b";
       const key = "83eb0b5b0b385cfaa6f37343d2dcece5";
       const res = await fetch(
-        `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
+        `https://api.edamam.com/api/recipes/v2?type=public&beta=true&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
           ""
         )}${this.calculateFilterCuisine.join(
           ""
         )}${this.calculateFilterMeal.join("")}`
       );
+
       const data = await res.json();
       this.recipesData = data;
       this.showRecipes = true;
@@ -50,6 +56,16 @@ export const useRecipeStore = defineStore({
     clearSearch() {
       this.clearAll();
       this.recipesData = [];
+    },
+    addToLiked(name, url) {
+      let recipe = {
+        label: name,
+        url: url,
+      };
+      this.saved.saved.push(recipe);
+    },
+    removeFromLiked(url) {
+      this.saved.saved = this.saved.saved.filter((item) => item.url !== url);
     },
   },
 });

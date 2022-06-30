@@ -18,7 +18,7 @@ function sideBar() {
     <fa class="close-main" icon="x" @click="sideBar()" />
     <nav class="nav-main">
       <RouterLink to="/">Recipe Search</RouterLink>
-      <RouterLink to="/about">Saved Recipes</RouterLink>
+      <RouterLink to="/saved">Saved Recipes</RouterLink>
       <router-link to="/about">Shopping List</router-link>
     </nav>
   </div>
@@ -35,6 +35,7 @@ function sideBar() {
   height: 100vh;
   position: absolute;
   transition: 0.5s;
+  z-index: 3;
 
   @include media {
     width: 100vw;

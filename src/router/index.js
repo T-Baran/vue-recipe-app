@@ -11,12 +11,12 @@ const router = createRouter({
       component: SearchViewVue,
     },
     {
-      path: "/about",
-      name: "about",
+      path: "/saved",
+      name: "saved",
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import("../views/AboutView.vue"),
+      component: () => import("../views/SavedView.vue"),
     },
   ],
 });
