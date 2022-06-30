@@ -29,7 +29,7 @@ const recipeStore = useRecipeStore();
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 10px 1px;
 
   & > * {
     color: $main-color3;
@@ -46,16 +46,20 @@ const recipeStore = useRecipeStore();
 .filter-type {
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
 }
-/* .checkbox { */
-/* appearance: none;
+.checkbox {
+  appearance: none;
   -webkit-appearance: none;
   background-color: inherit;
-  height: 40px;
-  width: 40px;
-  background-color: $main-color;
+  height: 20px;
+  width: 20px;
+  border: 2px solid $main-color;
   border-radius: 5px;
   cursor: pointer;
-} */
+}
+.checkbox:checked {
+  background-color: $main-color;
+}
 </style>
