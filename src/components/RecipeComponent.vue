@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted } from "vue";
+import { reactive, onBeforeMount, onMounted } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 
 const recipeStore = useRecipeStore();
@@ -15,7 +15,9 @@ const props = defineProps({
 function addToLiked() {
   if (state.like) {
     state.like = false;
-    recipeStore.removeFromLiked(props.data._links.self.href);
+    // recipeStore.removeFromLiked(props.data._links.self.href);
+    recipeStore.removeFromLiked(props.data.recipe.label);
+    console.log("chce usunąć");
   } else {
     state.like = true;
     recipeStore.addToLiked(
@@ -24,8 +26,16 @@ function addToLiked() {
     );
   }
 }
-
-console.log(props.data.recipe.imaages);
+console.log(props.data);
+onMounted(() => {
+  if (
+    recipeStore.saved.saved.some((url) => {
+      return url.label === props.data.recipe.label;
+    })
+  ) {
+    state.like = true;
+  }
+});
 </script>
 <template>
   <div class="container">

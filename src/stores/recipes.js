@@ -64,8 +64,11 @@ export const useRecipeStore = defineStore({
       };
       this.saved.saved.push(recipe);
     },
-    removeFromLiked(url) {
-      this.saved.saved = this.saved.saved.filter((item) => item.url !== url);
+    removeFromLiked(label) {
+      // console.log(this.saved.saved.filter((item) => item.label !== url));
+      this.saved.saved = this.saved.saved.filter(
+        (item) => item.label !== label
+      );
     },
   },
 });
