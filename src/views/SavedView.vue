@@ -9,7 +9,9 @@ const recipeStore = useRecipeStore();
   <header>
     <p>Saved Recipes</p>
   </header>
-  <SavedComponent v-for="recipe in recipeStore.saved.saved" :recipe="recipe" />
+  <div v-for="recipe in recipeStore.saved.saved" :key="recipe.label">
+    <SavedComponent :recipe="recipe" />
+  </div>
 </template>
 
 <style scoped lang="scss">

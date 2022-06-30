@@ -17,7 +17,7 @@ function addToLiked() {
     state.like = false;
     // recipeStore.removeFromLiked(props.data._links.self.href);
     recipeStore.removeFromLiked(props.data.recipe.label);
-    console.log("chce usunąć");
+    // console.log("chce usunąć");
   } else {
     state.like = true;
     recipeStore.addToLiked(
@@ -26,7 +26,7 @@ function addToLiked() {
     );
   }
 }
-console.log(props.data);
+// console.log(props.data);
 onMounted(() => {
   if (
     recipeStore.saved.saved.some((url) => {

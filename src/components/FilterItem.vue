@@ -12,7 +12,7 @@ const recipeStore = useRecipeStore();
 <template>
   <div class="container">
     <p class="title">{{ props.title }}</p>
-    <div v-for="diet in props.data" class="filter-type">
+    <div :key="diet" v-for="diet in props.data" class="filter-type">
       <label :for="diet">{{ diet }}</label>
       <input
         class="checkbox"

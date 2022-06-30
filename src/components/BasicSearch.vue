@@ -53,6 +53,7 @@ onBeforeMount(() => {
     <RecipeComponent
       v-for="item in recipeStore.recipesData.hits"
       :data="item"
+      :key="item.label"
     />
   </div>
 </template>
