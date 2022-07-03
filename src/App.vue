@@ -19,7 +19,7 @@ function sideBar() {
     <nav class="nav-main">
       <RouterLink to="/">Recipe Search</RouterLink>
       <RouterLink to="/saved">Saved Recipes</RouterLink>
-      <router-link to="/about">Shopping List</router-link>
+      <Router-link to="/cart">Shopping List</Router-link>
     </nav>
   </div>
 

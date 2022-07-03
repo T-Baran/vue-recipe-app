@@ -7,7 +7,9 @@ export const useRecipeStore = defineStore({
     saved: useLocalStorage("saved", {
       saved: [],
     }),
-    // liked: [],
+    cart: useLocalStorage("cart", {
+      cart: [],
+    }),
     recipesData: {},
     dietType: [],
     cuisineType: [],
@@ -64,11 +66,19 @@ export const useRecipeStore = defineStore({
       };
       this.saved.saved.push(recipe);
     },
-    removeFromLiked(label) {
-      // console.log(this.saved.saved.filter((item) => item.label !== url));
-      this.saved.saved = this.saved.saved.filter(
-        (item) => item.label !== label
-      );
+    removeFromLiked(name) {
+      this.saved.saved = this.saved.saved.filter((item) => item.label !== name);
+    },
+    addToCart(name, ingredients) {
+      if (this.cart.cart.find((item) => item.label === name)) return;
+      let cart = {
+        label: name,
+        ingredients: ingredients,
+      };
+      this.cart.cart.push(cart);
+    },
+    removeFromCart(name) {
+      this.cart.cart = this.cart.cart.filter((item) => item.label !== name);
     },
   },
 });

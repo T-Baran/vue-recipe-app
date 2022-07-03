@@ -7,7 +7,8 @@ const recipeStore = useRecipeStore();
 
 const state = reactive({
   like: false,
-  modal: false,
+  modalL: false,
+  cart: false,
 });
 
 const props = defineProps({
@@ -16,7 +17,7 @@ const props = defineProps({
 
 function addToLiked() {
   if (state.like) {
-    state.modal = true;
+    state.modalL = true;
     // recipeStore.removeFromLiked(props.data._links.self.href);
     // console.log("chce usunąć");
   } else {
@@ -27,28 +28,55 @@ function addToLiked() {
     );
   }
 }
-function afterModalDelete() {
+function afterModalDeleteLike() {
   state.like = false;
   recipeStore.removeFromLiked(props.data.recipe.label);
 }
+function addToCart() {
+  if (state.cart) {
+    state.modalC = true;
+  } else {
+    recipeStore.addToCart(
+      props.data.recipe.label,
+      props.data.recipe.ingredientLines
+    );
+    state.cart = true;
+  }
 
-// console.log(props.data);
+  if (state.like === false) addToLiked();
+}
+function afterModalDeleteCart() {
+  state.cart = false;
+  recipeStore.removeFromCart(props.data.recipe.label);
+}
+console.log(props.data);
 onMounted(() => {
   if (
-    recipeStore.saved.saved.some((url) => {
-      return url.label === props.data.recipe.label;
+    recipeStore.saved.saved.some((item) => {
+      return item.label === props.data.recipe.label;
     })
   ) {
     state.like = true;
+  }
+  if (
+    recipeStore.cart.cart.some((item) => {
+      return item.label === props.data.recipe.label;
+    })
+  ) {
+    state.cart = true;
   }
 });
 </script>
 <template>
   <ModalDelete
-    @delete="afterModalDelete()"
-    @close="state.modal = false"
-    :label="props.data.recipe.label"
-    v-if="state.modal"
+    @delete="afterModalDeleteLike()"
+    @close="state.modalL = false"
+    v-if="state.modalL"
+  />
+  <ModalDelete
+    @delete="afterModalDeleteCart()"
+    @close="state.modalC = false"
+    v-if="state.modalC"
   />
   <div class="container">
     <button
@@ -57,6 +85,14 @@ onMounted(() => {
       class="like-button"
     >
       <fa icon="heart" />
+    </button>
+
+    <button
+      @click="addToCart()"
+      :class="{ liked: state.cart }"
+      class="like-button cart"
+    >
+      <fa icon="cart-shopping" />
     </button>
     <img
       class="recipe-image"
@@ -90,7 +126,9 @@ onMounted(() => {
           >Click for detailed instructions</a
         >
       </button>
-      <button class="button"><p>Add to shopping list</p></button>
+      <button @click="addToCart()" class="button">
+        <p>Add to shopping list</p>
+      </button>
     </div>
   </div>
 </template>
@@ -124,6 +162,9 @@ onMounted(() => {
     width: 60%;
     height: 60%;
   }
+}
+.cart {
+  top: 80px;
 }
 
 .liked {
