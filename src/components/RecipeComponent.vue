@@ -1,11 +1,13 @@
 <script setup>
 import { reactive, onBeforeMount, onMounted } from "vue";
 import { useRecipeStore } from "../stores/recipes";
+import ModalDelete from "./ModalDelete.vue";
 
 const recipeStore = useRecipeStore();
 
 const state = reactive({
   like: false,
+  modal: false,
 });
 
 const props = defineProps({
@@ -14,9 +16,8 @@ const props = defineProps({
 
 function addToLiked() {
   if (state.like) {
-    state.like = false;
+    state.modal = true;
     // recipeStore.removeFromLiked(props.data._links.self.href);
-    recipeStore.removeFromLiked(props.data.recipe.label);
     // console.log("chce usunąć");
   } else {
     state.like = true;
@@ -26,6 +27,11 @@ function addToLiked() {
     );
   }
 }
+function afterModalDelete() {
+  state.like = false;
+  recipeStore.removeFromLiked(props.data.recipe.label);
+}
+
 // console.log(props.data);
 onMounted(() => {
   if (
@@ -38,6 +44,12 @@ onMounted(() => {
 });
 </script>
 <template>
+  <ModalDelete
+    @delete="afterModalDelete()"
+    @close="state.modal = false"
+    :label="props.data.recipe.label"
+    v-if="state.modal"
+  />
   <div class="container">
     <button
       @click="addToLiked()"
@@ -66,18 +78,19 @@ onMounted(() => {
 
       <p class="cuisine">Cuisine: {{ props.data.recipe.cuisineType[0] }}</p>
       <div class="ingredients-list">
-        <p>Ingredients list:</p>
+        <p class="ingredients-header">Ingredients list:</p>
         <ul>
           <li v-for="ingredient in props.data.recipe.ingredientLines">
             {{ ingredient }}
           </li>
         </ul>
       </div>
-      <button class="seeMore">
+      <button class="button">
         <a target="_blank" :href="props.data.recipe.url"
           >Click for detailed instructions</a
         >
       </button>
+      <button class="button"><p>Add to shopping list</p></button>
     </div>
   </div>
 </template>
@@ -120,7 +133,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 2rem 1rem;
 }
 .recipe-image {
@@ -162,14 +175,20 @@ onMounted(() => {
     text-align: center;
   }
 }
-.seeMore {
+.ingredients-header {
+  font-size: 20px;
+  font-weight: 500;
+  padding-bottom: 0.5rem;
+}
+.button {
   border: none;
   background-color: $main-color;
   padding: 0.5rem 1rem;
   border-radius: 10px;
   outline: none;
 
-  a {
+  a,
+  p {
     color: #fff;
     text-decoration: none;
   }

@@ -4,6 +4,7 @@ import { useRecipeStore } from "../stores/recipes";
 import RecipeComponent from "../components/RecipeComponent.vue";
 import SearchBar from "../components/SearchBar.vue";
 import BasicSearch from "../components/BasicSearch.vue";
+import ModalDelete from "../components/ModalDelete.vue";
 
 const recipeStore = useRecipeStore();
 
