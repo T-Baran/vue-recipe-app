@@ -1,11 +1,11 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 
 const recipeStore = useRecipeStore();
 
 const props = defineProps({
-  ingredient: String,
+  ingredient: Object,
   name: String,
 });
 
@@ -14,15 +14,25 @@ const state = reactive({
 });
 
 function updateCart() {
-  console.log("wykonać");
-  recipeStore.updateCart(props.name, props.ingredient);
+  console.log(props.ingredient.text);
+  recipeStore.updateCart(props.name, props.ingredient.text);
   state.done = !state.done;
 }
+
+onMounted(() => {
+  const search = recipeStore.cart.cart
+    .find((item) => item.label === props.name)
+    .ingredients.find((item) => item.text === props.ingredient.text);
+  console.log(search);
+  if (search.hasOwnProperty("done")) {
+    state.done = true;
+  }
+});
 </script>
 <template>
   <div class="ingredients-container">
     <li :class="{ done: state.done }" @dblclick="updateCart()">
-      {{ props.ingredient }}
+      {{ props.ingredient.text }}
     </li>
     <button @click="updateCart()">
       <fa icon="shopping-cart" />

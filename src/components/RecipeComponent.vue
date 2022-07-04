@@ -38,7 +38,7 @@ function addToCart() {
   } else {
     recipeStore.addToCart(
       props.data.recipe.label,
-      props.data.recipe.ingredientLines
+      props.data.recipe.ingredients
     );
     state.cart = true;
   }

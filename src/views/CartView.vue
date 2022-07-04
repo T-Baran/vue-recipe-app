@@ -5,7 +5,7 @@ import CartItem from "../components/CartItem.vue";
 
 const recipeStore = useRecipeStore();
 
-console.log(recipeStore.cart.cart[0].ingredients);
+// console.log(recipeStore.cart.cart[0].ingredients);
 </script>
 
 <template>
