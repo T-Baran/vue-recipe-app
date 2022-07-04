@@ -13,16 +13,21 @@ const props = defineProps({
   name: String,
   ingredients: Array,
 });
+
+function removeFromCart() {
+  recipeStore.removeFromCart(props.name);
+  state.showIngredients = false;
+}
 </script>
 <template>
   <div class="container">
-    <div
-      @click="state.showIngredients = !state.showIngredients"
-      class="title-container"
-    >
+    <div class="title-container">
       <fa v-if="state.showIngredients" class="icon" icon="angles-up" />
       <fa v-else class="icon" icon="angles-down" />
-      <p class="title">{{ props.name }}</p>
+      <p @click="state.showIngredients = !state.showIngredients" class="title">
+        {{ props.name }}
+      </p>
+      <fa @click="removeFromCart()" icon="x" />
     </div>
     <div class="ingredients-container">
       <ul v-if="state.showIngredients">
@@ -30,6 +35,7 @@ const props = defineProps({
           v-for="item in ingredients"
           :name="name"
           :ingredient="item"
+          :key="item"
         />
       </ul>
     </div>
@@ -43,7 +49,7 @@ const props = defineProps({
 }
 .title-container {
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
   margin-bottom: 0.8rem;
@@ -53,7 +59,7 @@ const props = defineProps({
 }
 .title {
   font-size: 20px;
-  text-align: left;
+  text-align: center;
   width: fit-content;
 }
 ul {

@@ -1,5 +1,8 @@
 <script setup>
 import { reactive } from "vue";
+import { useRecipeStore } from "../stores/recipes";
+
+const recipeStore = useRecipeStore();
 
 const props = defineProps({
   ingredient: String,
@@ -10,14 +13,18 @@ const state = reactive({
   done: false,
 });
 
-function updateCart() {}
+function updateCart() {
+  console.log("wykonać");
+  recipeStore.updateCart(props.name, props.ingredient);
+  state.done = !state.done;
+}
 </script>
 <template>
   <div class="ingredients-container">
-    <li :class="{ done: state.done }" @dblclick="state.done = !state.done">
+    <li :class="{ done: state.done }" @dblclick="updateCart()">
       {{ props.ingredient }}
     </li>
-    <button @click="state.done = !state.done">
+    <button @click="updateCart()">
       <fa icon="shopping-cart" />
     </button>
   </div>

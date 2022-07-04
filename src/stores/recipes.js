@@ -81,5 +81,13 @@ export const useRecipeStore = defineStore({
     removeFromCart(name) {
       this.cart.cart = this.cart.cart.filter((item) => item.label !== name);
     },
+    updateCart(name, ingredient) {
+      // this.cart.cart.find(item => item.label === name).find(item => item.ingredients === ingredient).done = !this.cart.cart.find(item => item.label === name).find(item => item.ingredients === ingredient).done
+      console.log(
+        this.cart.cart
+          .find((item) => item.label === name)
+          .ingredients.find((item) => item === ingredient)
+      );
+    },
   },
 });
