@@ -1,5 +1,9 @@
 <script setup>
 import { reactive } from "vue";
+import { useRecipeStore } from "../stores/recipes";
+import CartIngredient from "./CartIngredient.vue";
+
+const recipeStore = useRecipeStore();
 
 const state = reactive({
   showIngredients: false,
@@ -12,14 +16,21 @@ const props = defineProps({
 </script>
 <template>
   <div class="container">
-    <div class="title-container">
+    <div
+      @click="state.showIngredients = !state.showIngredients"
+      class="title-container"
+    >
       <fa v-if="state.showIngredients" class="icon" icon="angles-up" />
       <fa v-else class="icon" icon="angles-down" />
       <p class="title">{{ props.name }}</p>
     </div>
     <div class="ingredients-container">
-      <ul>
-        <li v-for="item in props.ingredients">{{ item }}</li>
+      <ul v-if="state.showIngredients">
+        <CartIngredient
+          v-for="item in ingredients"
+          :name="name"
+          :ingredient="item"
+        />
       </ul>
     </div>
   </div>
@@ -46,12 +57,17 @@ const props = defineProps({
   width: fit-content;
 }
 ul {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* gap: 1rem; */
 }
-li {
+/* li {
   list-style-type: disc;
   margin-left: 1.2rem;
+  padding: 0.5rem 0 0.5rem 0.3rem;
+} */
+.done {
+  background-color: $main-color;
+  color: #fff;
 }
 </style>

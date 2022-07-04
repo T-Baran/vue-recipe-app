@@ -74,6 +74,7 @@ export const useRecipeStore = defineStore({
       let cart = {
         label: name,
         ingredients: ingredients,
+        done: false,
       };
       this.cart.cart.push(cart);
     },
