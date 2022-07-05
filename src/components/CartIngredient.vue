@@ -65,11 +65,13 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  background-color: inherit;
+  border: none;
   & > * {
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     padding: 5px;
+    color: $side-color;
   }
 }
 </style>

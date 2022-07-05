@@ -7,6 +7,7 @@ const recipeStore = useRecipeStore();
 
 const state = reactive({
   showIngredients: false,
+  edit: false,
 });
 
 const props = defineProps({
@@ -29,8 +30,13 @@ function removeFromCart() {
       </p>
       <fa @click="removeFromCart()" icon="x" />
     </div>
-    <div class="ingredients-container">
-      <ul v-if="state.showIngredients">
+    <div v-if="state.showIngredients" class="ingredients-container">
+      <div @click="state.edit = !state.edit" class="edit">
+        <p>Edit</p>
+        <fa v-if="!state.edit" icon="angles-down" />
+        <fa v-else icon="angles-up" />
+      </div>
+      <ul>
         <CartIngredient
           v-for="item in ingredients"
           :name="name"
@@ -50,7 +56,7 @@ function removeFromCart() {
 .title-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   gap: 1rem;
   margin-bottom: 0.8rem;
   padding-bottom: 0.5rem;
@@ -62,18 +68,16 @@ function removeFromCart() {
   text-align: center;
   width: fit-content;
 }
-ul {
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* gap: 1rem; */
-}
-/* li {
-  list-style-type: disc;
-  margin-left: 1.2rem;
-  padding: 0.5rem 0 0.5rem 0.3rem;
-} */
-.done {
-  background-color: $main-color;
-  color: #fff;
+.edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  color: $main-color;
+  cursor: pointer;
+
+  p {
+    font-size: 20px;
+  }
 }
 </style>
