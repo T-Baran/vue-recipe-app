@@ -94,5 +94,26 @@ export const useRecipeStore = defineStore({
         delete search.done;
       }
     },
+    updateCartName(name, ingredient, newIngredient) {
+      const search = this.cart.cart
+        .find((item) => item.label === name)
+        .ingredients.find((item) => item.text === ingredient);
+      console.log(search);
+      search.text = newIngredient;
+    },
+    addIngredient(name, newIngredient) {
+      const search = this.cart.cart.find((item) => item.label === name);
+      let item = {
+        text: newIngredient,
+      };
+      console.log(search);
+      search.ingredients = [...search.ingredients, item];
+    },
+    removeIngredient(name, ingredient) {
+      this.cart.cart.find((item) => item.label === name).ingredients =
+        this.cart.cart
+          .find((item) => item.label === name)
+          .ingredients.filter((item) => item.text !== ingredient);
+    },
   },
 });

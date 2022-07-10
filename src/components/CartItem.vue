@@ -2,6 +2,7 @@
 import { reactive } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import CartIngredient from "./CartIngredient.vue";
+import CreateIngredient from "./CreateIngredient.vue";
 
 const recipeStore = useRecipeStore();
 
@@ -32,16 +33,17 @@ function removeFromCart() {
     </div>
     <div v-if="state.showIngredients" class="ingredients-container">
       <div @click="state.edit = !state.edit" class="edit">
-        <p>Edit</p>
-        <fa v-if="!state.edit" icon="angles-down" />
-        <fa v-else icon="angles-up" />
+        <p v-if="!state.edit">Show edit options</p>
+        <p v-else>Hide edit options</p>
       </div>
+      <CreateIngredient v-if="state.edit" :name="props.name" />
       <ul>
         <CartIngredient
           v-for="item in ingredients"
-          :name="name"
+          :name="props.name"
           :ingredient="item"
-          :key="item"
+          :key="item.text"
+          :edit="state.edit"
         />
       </ul>
     </div>
