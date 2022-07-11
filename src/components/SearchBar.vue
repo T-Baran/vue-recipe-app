@@ -16,6 +16,7 @@ function searchRecipe() {
   recipeStore.fetchRecipe(state.searchValue);
   state.searchValue = "";
   state.showRecipes = true;
+  state.showFilter = false;
 }
 </script>
 <template>
