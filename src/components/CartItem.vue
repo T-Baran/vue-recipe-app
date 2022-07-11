@@ -3,12 +3,14 @@ import { reactive } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import CartIngredient from "./CartIngredient.vue";
 import CreateIngredient from "./CreateIngredient.vue";
+import ModalDelete from "./ModalDelete.vue";
 
 const recipeStore = useRecipeStore();
 
 const state = reactive({
   showIngredients: false,
   edit: false,
+  modalList: false,
 });
 
 const props = defineProps({
@@ -22,6 +24,12 @@ function removeFromCart() {
 }
 </script>
 <template>
+  <ModalDelete
+    v-if="state.modalList"
+    @close="state.modalList = false"
+    @delete="removeFromCart()"
+    title="list"
+  />
   <div class="container">
     <div class="title-container">
       <fa v-if="state.showIngredients" class="icon" icon="angles-up" />
@@ -29,7 +37,7 @@ function removeFromCart() {
       <p @click="state.showIngredients = !state.showIngredients" class="title">
         {{ props.name }}
       </p>
-      <fa @click="removeFromCart()" icon="x" />
+      <fa @click="state.modalList = true" icon="x" />
     </div>
     <div v-if="state.showIngredients" class="ingredients-container">
       <div @click="state.edit = !state.edit" class="edit">
@@ -69,6 +77,7 @@ function removeFromCart() {
   font-size: 20px;
   text-align: center;
   width: fit-content;
+  overflow-wrap: anywhere;
 }
 .edit {
   display: flex;
@@ -76,6 +85,7 @@ function removeFromCart() {
   align-items: center;
   gap: 1rem;
   color: $main-color;
+  margin: 1rem 0;
   cursor: pointer;
 
   p {

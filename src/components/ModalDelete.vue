@@ -1,14 +1,15 @@
 <script setup>
-function test() {
-  console.log("klikom");
-}
+const props = defineProps({
+  title: String,
+});
 </script>
 <template>
   <div @click="$emit('close')" class="modal-container">
     <div class="box">
-      <h2>Delete Comment</h2>
+      <h2>Delete {{ props.title }}</h2>
       <p>
-        Are you sure you want to delete this recipe? This will remove the recipe
+        Are you sure you want to delete this {{ props.title }}? This will remove
+        the {{ props.title }}
         and can't be undone.
       </p>
       <div class="button-selection">

@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, onMounted } from "vue";
 import { useRecipeStore } from "../stores/recipes";
-import CreateIngredient from "./CreateIngredient.vue";
+import ModalDelete from "./ModalDelete.vue";
 
 const recipeStore = useRecipeStore();
 
@@ -15,6 +15,7 @@ const state = reactive({
   done: false,
   textArea: props.ingredient.text,
   updateName: false,
+  modalIngredient: false,
 });
 
 function updateCart() {
@@ -53,6 +54,12 @@ onMounted(() => {
 });
 </script>
 <template>
+  <ModalDelete
+    v-if="state.modalIngredient"
+    @delete="removeIngredient()"
+    @close="state.modalIngredient = false"
+    title="ingredient"
+  />
   <div class="ingredients-container">
     <li :class="{ done: state.done }" @dblclick="updateCart()">
       <textarea v-if="state.updateName" v-model="state.textArea"></textarea>
@@ -60,7 +67,7 @@ onMounted(() => {
     </li>
     <div class="buttons">
       <div class="buttons" v-if="props.edit">
-        <button @click="removeIngredient()">
+        <button @click="state.modalIngredient = true">
           <fa class="delete" icon="xmark" />
         </button>
         <button @click="updateCartName()">
@@ -87,14 +94,40 @@ li {
   list-style-type: disc;
   margin-left: 1.2rem;
   padding: 0.7rem 0 0.7rem 0.3rem;
-
+  p {
+    overflow-wrap: anywhere;
+  }
   textarea {
-    /* padding: 4px; */
-    border: none;
-    /* box-shadow: 0 0 0px 5px $main-color; */
+    background-color: #fff;
+    color: $side-color;
+    /* padding: 1rem; */
+    border-radius: 10px;
+    border: 2px solid transparent;
     outline: 1px solid $main-color;
-    outline-offset: 3px;
-    height: fit-content;
+    outline-offset: 4px;
+    line-height: 1.3;
+    /* font-weight: 500; */
+    transition: 0.2s;
+    resize: none;
+
+    &:focus {
+      background-color: $main-color2;
+      /* color: $main-color2; */
+      /* outline: 1px solid $main-color; */
+      /* outline-offset: 4px; */
+      /* border-color: $main-color2; */
+    }
+    /* padding: 4px; */
+    /* border: none; */
+    /* box-shadow: 0 0 0px 5px $main-color; */
+    /* outline: 1px solid $main-color; */
+    /* outline-offset: 3px; */
+    /* height: fit-content; */
+
+    /* &:active { */
+    /* outline: 1px solid $main-color; */
+    /* outline-offset: 3px; */
+    /* } */
   }
 }
 .done {

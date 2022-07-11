@@ -38,7 +38,7 @@ form {
   margin: 1.5rem 0;
 }
 label {
-  font-size: 20px;
+  font-size: 18px;
   color: $main-color;
   font-weight: 500;
 }
@@ -51,7 +51,7 @@ input {
   text-align: center;
 }
 button {
-  font-size: 24px;
+  font-size: 20px;
   background-color: $main-color;
   border: none;
   border-radius: 10px;

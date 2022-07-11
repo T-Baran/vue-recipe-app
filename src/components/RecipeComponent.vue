@@ -7,7 +7,8 @@ const recipeStore = useRecipeStore();
 
 const state = reactive({
   like: false,
-  modalL: false,
+  modalLike: false,
+  modalCart: false,
   cart: false,
 });
 
@@ -17,7 +18,7 @@ const props = defineProps({
 
 function addToLiked() {
   if (state.like) {
-    state.modalL = true;
+    state.modalLike = true;
     // recipeStore.removeFromLiked(props.data._links.self.href);
     // console.log("chce usunąć");
   } else {
@@ -34,7 +35,7 @@ function afterModalDeleteLike() {
 }
 function addToCart() {
   if (state.cart) {
-    state.modalC = true;
+    state.modalCart = true;
   } else {
     recipeStore.addToCart(
       props.data.recipe.label,
@@ -70,13 +71,15 @@ onMounted(() => {
 <template>
   <ModalDelete
     @delete="afterModalDeleteLike()"
-    @close="state.modalL = false"
-    v-if="state.modalL"
+    @close="state.modalLike = false"
+    v-if="state.modalLike"
+    title="recipe"
   />
   <ModalDelete
     @delete="afterModalDeleteCart()"
-    @close="state.modalC = false"
-    v-if="state.modalC"
+    @close="state.modalCart = false"
+    v-if="state.modalCart"
+    title="recipe"
   />
   <div class="container">
     <button
@@ -125,9 +128,6 @@ onMounted(() => {
         <a target="_blank" :href="props.data.recipe.url"
           >Click for detailed instructions</a
         >
-      </button>
-      <button @click="addToCart()" class="button">
-        <p>Add to shopping list</p>
       </button>
     </div>
   </div>
