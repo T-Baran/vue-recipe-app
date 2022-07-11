@@ -79,7 +79,7 @@ onMounted(() => {
     @delete="afterModalDeleteCart()"
     @close="state.modalCart = false"
     v-if="state.modalCart"
-    title="recipe"
+    title="list"
   />
   <div class="container">
     <button

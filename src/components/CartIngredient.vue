@@ -14,6 +14,7 @@ const props = defineProps({
 const state = reactive({
   done: false,
   textArea: props.ingredient.text,
+  textAreaNew: props.ingredient.text,
   updateName: false,
   modalIngredient: false,
 });
@@ -32,7 +33,7 @@ function updateCartName() {
     recipeStore.updateCartName(
       props.name,
       props.ingredient.text,
-      state.textArea
+      state.textAreaNew
     );
   }
 
@@ -52,6 +53,7 @@ onMounted(() => {
     state.done = true;
   }
 });
+console.log(state.textArea);
 </script>
 <template>
   <ModalDelete
@@ -61,9 +63,18 @@ onMounted(() => {
     title="ingredient"
   />
   <div class="ingredients-container">
-    <li :class="{ done: state.done }" @dblclick="updateCart()">
-      <textarea v-if="state.updateName" v-model="state.textArea"></textarea>
-      <p v-else>{{ state.textArea }}</p>
+    <li @dblclick="updateCart()">
+      <!-- <textarea v-if="state.updateName" v-model="state.textArea"></textarea> -->
+      <p
+        class="editable"
+        contenteditable="true"
+        spellcheck="false"
+        v-if="state.updateName"
+        @input="state.textAreaNew = $event.target.innerText"
+      >
+        {{ state.textArea }}
+      </p>
+      <p :class="{ done: state.done }" v-else>{{ state.textArea }}</p>
     </li>
     <div class="buttons">
       <div class="buttons" v-if="props.edit">
@@ -97,44 +108,19 @@ li {
   p {
     overflow-wrap: anywhere;
   }
-  textarea {
-    background-color: #fff;
-    color: $side-color;
-    /* padding: 1rem; */
-    border-radius: 10px;
-    border: 2px solid transparent;
+  .editable {
     outline: 1px solid $main-color;
-    outline-offset: 4px;
-    line-height: 1.3;
-    /* font-weight: 500; */
-    transition: 0.2s;
-    resize: none;
-
-    &:focus {
-      background-color: $main-color2;
-      /* color: $main-color2; */
-      /* outline: 1px solid $main-color; */
-      /* outline-offset: 4px; */
-      /* border-color: $main-color2; */
-    }
-    /* padding: 4px; */
-    /* border: none; */
-    /* box-shadow: 0 0 0px 5px $main-color; */
-    /* outline: 1px solid $main-color; */
-    /* outline-offset: 3px; */
-    /* height: fit-content; */
-
-    /* &:active { */
-    /* outline: 1px solid $main-color; */
-    /* outline-offset: 3px; */
-    /* } */
+    outline-offset: 8px;
+    border-radius: 5px;
+    color: $main-color3;
+    text-decoration: none;
   }
 }
 .done {
-  /* background-color: $main-color; */
   color: $main-color;
   text-decoration: line-through;
 }
+
 .buttons {
   display: flex;
   align-items: center;

@@ -17,9 +17,9 @@ function sideBar() {
   <div class="wrapper-main" :class="{ hideLeftMain: !state.showSideBar }">
     <fa class="close-main" icon="x" @click="sideBar()" />
     <nav class="nav-main">
-      <RouterLink to="/">Recipe Search</RouterLink>
-      <RouterLink to="/saved">Saved Recipes</RouterLink>
-      <Router-link to="/cart">Shopping List</Router-link>
+      <RouterLink to="/" @click="sideBar()">Recipe Search</RouterLink>
+      <RouterLink to="/saved" @click="sideBar()">Saved Recipes</RouterLink>
+      <Router-link to="/cart" @click="sideBar()">Shopping List</Router-link>
     </nav>
   </div>
 
