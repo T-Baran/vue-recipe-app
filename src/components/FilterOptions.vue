@@ -2,6 +2,7 @@
 import { reactive } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import FilterItem from "./FilterItem.vue";
+import CaloriesItem from "./CaloriesItem.vue";
 
 const recipeStore = useRecipeStore();
 
@@ -24,6 +25,16 @@ const cuisineType = [
   "Caribbean",
 ];
 const mealType = ["Breakfast", "Dinner", "Lunch", "Snack"];
+const healthType = [
+  "gluten-free",
+  "keto-friendly",
+  "kidney-friendly",
+  "low-sugar",
+  "peanut-free",
+  "vegan",
+  "vegetarian",
+  "wheat-free",
+];
 // function print() {
 //   console.log(recipeStore.calculateFilter);
 // }
@@ -35,6 +46,12 @@ const mealType = ["Breakfast", "Dinner", "Lunch", "Snack"];
 
   <FilterItem title="Meal Type" :data="mealType" route="mealType" />
 
+  <FilterItem
+    title="Health Restriction"
+    :data="healthType"
+    route="healthType"
+  />
+  <CaloriesItem title="Calories per serving" route="calories" />
   <button @click.prevent="recipeStore.clearAll()">Clear all</button>
 </template>
 <style scoped lang="scss">

@@ -215,6 +215,9 @@ onMounted(() => {
     margin-bottom: 0.5rem;
     text-align: center;
   }
+  li {
+    list-style-position: inside;
+  }
 }
 .ingredients-header {
   font-size: 20px;

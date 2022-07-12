@@ -36,7 +36,12 @@ function searchRecipe() {
     </p>
     <FilterOptions v-if="state.showFilter" />
 
-    <button @click.prevent="searchRecipe()" class="submit" type="submit">
+    <button
+      :disabled="recipeStore.stopSearch"
+      @click.prevent="searchRecipe()"
+      class="submit"
+      type="submit"
+    >
       Search
     </button>
   </form>

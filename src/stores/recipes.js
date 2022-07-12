@@ -14,7 +14,10 @@ export const useRecipeStore = defineStore({
     dietType: [],
     cuisineType: [],
     mealType: [],
+    healthType: [],
+    calories: [0, 0],
     showRecipes: false,
+    stopSearch: false,
   }),
   getters: {
     calculateFilterDiet: (state) => {
@@ -32,28 +35,55 @@ export const useRecipeStore = defineStore({
         return "&mealType=" + item;
       });
     },
+    calculateFilterHealth: (state) => {
+      return state.healthType.map((item) => {
+        return "&health=" + item;
+      });
+    },
+    calculateFilterCalories: (state) => {
+      return "&calories=" + state.calories[0] + "-" + state.calories[1];
+    },
   },
   actions: {
     async fetchRecipe(query) {
       this.showRecipes = false;
       const id = "5203a72b";
       const key = "83eb0b5b0b385cfaa6f37343d2dcece5";
+
       const res = await fetch(
         `https://api.edamam.com/api/recipes/v2?type=public&beta=true&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
           ""
         )}${this.calculateFilterCuisine.join(
           ""
-        )}${this.calculateFilterMeal.join("")}`
+        )}${this.calculateFilterMeal.join("")}
+        ${this.calculateFilterHealth.join("")}
+        ${
+          this.calories[0] === 0 && this.calories[1] === 0
+            ? ""
+            : this.calculateFilterCalories
+        }`
       );
-
       const data = await res.json();
       this.recipesData = data;
       this.showRecipes = true;
+      console.log(`https://api.edamam.com/api/recipes/v2?type=public&beta=true&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
+        ""
+      )}${this.calculateFilterCuisine.join("")}${this.calculateFilterMeal.join(
+        ""
+      )}
+      ${this.calculateFilterHealth.join("")}
+      ${
+        this.calories[0] == 0 && this.calories[1] == 0
+          ? ""
+          : this.calculateFilterCalories
+      }`);
     },
     clearAll() {
       this.dietType = [];
       this.cuisineType = [];
       this.mealType = [];
+      this.healthType = [];
+      this.calories = [0, 0];
     },
     clearSearch() {
       this.clearAll();

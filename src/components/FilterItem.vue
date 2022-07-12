@@ -1,4 +1,5 @@
 <script setup>
+import { reactive } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 
 const props = defineProps({
@@ -7,12 +8,27 @@ const props = defineProps({
   route: String,
 });
 
+const state = reactive({
+  showMenu: false,
+});
+
 const recipeStore = useRecipeStore();
 </script>
 <template>
   <div class="container">
-    <p class="title">{{ props.title }}</p>
-    <div :key="diet" v-for="diet in props.data" class="filter-type">
+    <div @click="state.showMenu = !state.showMenu" class="title-container">
+      <p class="title">{{ props.title }}</p>
+
+      <fa v-if="state.showMenu" class="icon" icon="angles-up" />
+      <fa v-else class="icon" icon="angles-down" />
+    </div>
+
+    <div
+      v-if="state.showMenu"
+      v-for="diet in props.data"
+      :key="diet"
+      class="filter-type"
+    >
       <label :for="diet">{{ diet }}</label>
       <input
         class="checkbox"
@@ -35,12 +51,23 @@ const recipeStore = useRecipeStore();
     color: $main-color3;
   }
 }
-.title {
-  grid-column: 1/3;
-  justify-self: center;
-  color: $main-color;
-  font-size: 24px;
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: span 2;
+  gap: 1rem;
   margin-bottom: 1rem;
+  .title {
+    grid-column: 1/3;
+    justify-self: center;
+    color: $main-color;
+    font-size: 24px;
+    /* margin-bottom: 1rem; */
+  }
+  .icon {
+    color: $main-color;
+  }
 }
 
 .filter-type {
