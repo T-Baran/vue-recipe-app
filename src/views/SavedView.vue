@@ -9,8 +9,12 @@ const recipeStore = useRecipeStore();
   <header>
     <p>Saved Recipes</p>
   </header>
-  <div v-for="recipe in recipeStore.saved.saved" :key="recipe.label">
-    <SavedComponent :recipe="recipe" />
+  <div class="saved-container">
+    <SavedComponent
+      v-for="recipe in recipeStore.saved.saved"
+      :key="recipe.label"
+      :recipe="recipe"
+    />
   </div>
 </template>
 
@@ -29,5 +33,14 @@ header {
     font-size: 30px;
     font-weight: 700;
   }
+
+  @include media {
+    padding: 120px 0 20px 0;
+    width: 50vw;
+    margin-inline: auto;
+  }
+}
+.saved-container {
+  @include recipeStyle;
 }
 </style>

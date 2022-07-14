@@ -101,7 +101,7 @@ function compareCalories() {
 
   input {
     font-size: 16px;
-    width: 25vw;
+    width: 100%;
     text-align: center;
     color: $main-color3;
     border: 1px solid $main-color;

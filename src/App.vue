@@ -17,16 +17,18 @@ function sideBar() {
   <div class="wrapper-main" :class="{ hideLeftMain: !state.showSideBar }">
     <fa class="close-main" icon="x" @click="sideBar()" />
     <nav class="nav-main">
+      <p class="title">Recipe App</p>
       <RouterLink to="/" @click="sideBar()">Recipe Search</RouterLink>
       <RouterLink to="/saved" @click="sideBar()">Saved Recipes</RouterLink>
       <Router-link to="/cart" @click="sideBar()">Shopping List</Router-link>
+      <div class="edamam" id="edamam-badge" data-color="white"></div>
     </nav>
   </div>
 
   <RouterView />
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "./assets/variables.scss";
 
 .wrapper-main {
@@ -62,15 +64,14 @@ function sideBar() {
   }
 }
 .nav-main {
-  display: flex;
-  flex-direction: column;
-  height: 300px;
+  display: grid;
+  grid-template-columns: 1fr;
+  height: 100vh;
   width: 100%;
+  align-content: start;
+  row-gap: 2rem;
 
-  justify-content: space-around;
-  align-items: start;
-
-  font-size: 2rem;
+  font-size: 1.5rem;
   padding: 1rem;
 
   & * {
@@ -80,9 +81,13 @@ function sideBar() {
   }
 
   @include media {
-    flex-direction: row;
+    grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+    /* flex-direction: row; */
+    /* align-items: center; */
+    justify-items: center;
     align-items: center;
     height: 100%;
+    gap: 3rem;
   }
 }
 .close-main {
@@ -95,6 +100,22 @@ function sideBar() {
 
   @include media {
     display: none;
+  }
+}
+.title {
+  margin-bottom: 2rem;
+  @include media {
+    margin: 0;
+    font-size: 32px;
+  }
+}
+.edamam {
+  position: absolute;
+  bottom: 1rem;
+  @include media {
+    position: static;
+    justify-self: right;
+    margin-right: 10px;
   }
 }
 </style>

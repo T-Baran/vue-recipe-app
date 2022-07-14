@@ -49,7 +49,7 @@ onBeforeMount(() => {
       Desserts
     </button>
   </div>
-  <div v-if="recipeStore.showRecipes">
+  <div v-if="recipeStore.showRecipes" class="container">
     <RecipeComponent
       v-for="item in recipeStore.recipesData.hits"
       :data="item"
@@ -67,16 +67,39 @@ onBeforeMount(() => {
   height: 60px;
   width: 80vw;
   color: $main-color3;
+
+  @include media {
+    width: 70vw;
+
+    margin: 1rem auto;
+  }
   & > button {
     border: none;
     border-bottom: 2px solid inherit;
     background-color: inherit;
     color: $main-color3;
+
+    @include media {
+      font-size: 30px;
+    }
   }
   .underline {
     color: $side-color;
     font-weight: 700;
     border-bottom: 2px solid $side-color;
+  }
+}
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  justify-items: center;
+  column-gap: 1rem;
+
+  @include media {
+    grid-template-columns: repeat(3, 1fr);
+    width: 70vw;
+    margin-inline: auto;
   }
 }
 </style>

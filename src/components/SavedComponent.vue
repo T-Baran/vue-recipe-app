@@ -28,7 +28,7 @@ console.log(props.recipe);
       Load full recipe <fa icon="angles-down" />
     </p>
   </div>
-  <div v-else class="full-recipe">
+  <div v-else>
     <RecipeComponent :data="state.data" />
   </div>
 </template>
@@ -36,13 +36,14 @@ console.log(props.recipe);
 @import "../assets/variables.scss";
 
 .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   justify-content: center;
   align-items: center;
   margin-inline: auto;
   gap: 1rem;
   margin-bottom: 2rem;
+  align-self: start;
 }
 .title {
   font-size: 20px;

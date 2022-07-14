@@ -21,7 +21,11 @@ function searchRecipe() {
 </script>
 <template>
   <form>
-    <input type="text" v-model="state.searchValue" />
+    <input
+      type="text"
+      v-model="state.searchValue"
+      @keydown.enter.prevent="searchRecipe()"
+    />
     <p
       @click="state.showFilter = !state.showFilter"
       v-if="!state.showFilter"
@@ -61,6 +65,11 @@ form {
   justify-content: space-around;
   gap: 2rem;
   margin-top: 2rem;
+
+  @include media {
+    width: Clamp(600px, 50vw, 800px);
+    margin-inline: auto;
+  }
 }
 
 input {
@@ -91,5 +100,18 @@ input {
   border-radius: 10px;
   letter-spacing: 2px;
   margin-bottom: 2rem;
+}
+.recipes {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  justify-items: center;
+  column-gap: 1rem;
+
+  @include media {
+    grid-template-columns: repeat(3, 1fr);
+    width: 70vw;
+    margin-inline: auto;
+  }
 }
 </style>

@@ -31,10 +31,13 @@ function removeFromCart() {
     title="list"
   />
   <div class="container">
-    <div class="title-container">
+    <div
+      @click="state.showIngredients = !state.showIngredients"
+      class="title-container"
+    >
       <fa v-if="state.showIngredients" class="icon" icon="angles-up" />
       <fa v-else class="icon" icon="angles-down" />
-      <p @click="state.showIngredients = !state.showIngredients" class="title">
+      <p class="title">
         {{ props.name }}
       </p>
       <fa @click="state.modalList = true" icon="x" />
@@ -62,6 +65,7 @@ function removeFromCart() {
 .container {
   padding: 2rem;
   color: $main-color3;
+  width: Max(70%, 330px);
 }
 .title-container {
   display: flex;
@@ -72,12 +76,17 @@ function removeFromCart() {
   padding-bottom: 0.5rem;
   border-bottom: 3px solid $main-color;
   cursor: pointer;
+  /* width: 100%; */
 }
 .title {
   font-size: 20px;
   text-align: center;
-  width: fit-content;
+  /* width: fit-content; */
   overflow-wrap: anywhere;
+
+  @include media {
+    width: 20vw;
+  }
 }
 .edit {
   display: flex;

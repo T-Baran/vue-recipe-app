@@ -48,11 +48,23 @@ console.log(recipeStore.recipesData);
 header {
   display: flex;
   justify-content: space-between;
+  /* justify-items: center; */
   align-items: center;
   height: 70px;
   padding-inline: 2rem;
   color: $main-color;
+
+  @include media {
+    padding: 120px 0 20px 0;
+    width: 50vw;
+    margin-inline: auto;
+    justify-content: center;
+    gap: 2rem;
+    /* position: relative; */
+    /* top: 80px; */
+  }
 }
+
 .search-bar {
   width: 80vw;
   margin-inline: auto;
@@ -61,6 +73,9 @@ header {
   font-size: 30px;
   font-weight: 700;
   margin-left: 2rem;
+  @include media {
+    margin: 0;
+  }
 }
 .icon {
   width: 30px;

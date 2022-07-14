@@ -46,7 +46,7 @@ input {
   border: 1px solid $main-color3;
   border-radius: 5px;
   height: 2rem;
-  width: 300px;
+  width: 100%;
   color: $main-color3;
   text-align: center;
 }
