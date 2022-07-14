@@ -15,6 +15,7 @@ export const useRecipeStore = defineStore({
     cuisineType: [],
     mealType: [],
     healthType: [],
+    excludedIngredient: [],
     calories: [0, 0],
     showRecipes: false,
     stopSearch: false,
@@ -41,7 +42,12 @@ export const useRecipeStore = defineStore({
       });
     },
     calculateFilterCalories: (state) => {
-      return "&calories=" + state.calories[0] + "-" + state.calories[1];
+      return `&calories=${state.calories[0]}-${state.calories[1]}`;
+    },
+    calculateExcludedIngredients: (state) => {
+      return state.excludedIngredient.map((item) => {
+        return "&excluded=" + item;
+      });
     },
   },
   actions: {
@@ -61,7 +67,7 @@ export const useRecipeStore = defineStore({
           this.calories[0] === 0 && this.calories[1] === 0
             ? ""
             : this.calculateFilterCalories
-        }`
+        }${this.calculateExcludedIngredients.join("")}`
       );
       const data = await res.json();
       this.recipesData = data;
@@ -73,10 +79,10 @@ export const useRecipeStore = defineStore({
       )}
       ${this.calculateFilterHealth.join("")}
       ${
-        this.calories[0] == 0 && this.calories[1] == 0
+        this.calories[0] === 0 && this.calories[1] === 0
           ? ""
           : this.calculateFilterCalories
-      }`);
+      }${this.calculateExcludedIngredients.join("")}`);
     },
     clearAll() {
       this.dietType = [];
@@ -84,6 +90,7 @@ export const useRecipeStore = defineStore({
       this.mealType = [];
       this.healthType = [];
       this.calories = [0, 0];
+      this.excludedIngredient = [];
     },
     clearSearch() {
       this.clearAll();
@@ -144,6 +151,15 @@ export const useRecipeStore = defineStore({
         this.cart.cart
           .find((item) => item.label === name)
           .ingredients.filter((item) => item.text !== ingredient);
+    },
+    addExcludedIngredient(name) {
+      this.excludedIngredient = [...this.excludedIngredient, name];
+    },
+    deleteExcludedIngredient(name) {
+      console.log(name);
+      this.excludedIngredient = this.excludedIngredient.filter(
+        (item) => item != name
+      );
     },
   },
 });

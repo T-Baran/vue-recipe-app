@@ -69,6 +69,7 @@ input {
   padding: 0.45rem;
   color: $side-color;
   text-align: center;
+  font-size: 20px;
 }
 .filters {
   display: flex;

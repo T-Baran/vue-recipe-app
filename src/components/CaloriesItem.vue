@@ -100,10 +100,13 @@ function compareCalories() {
   /* flex-grow: 1; */
 
   input {
-    font-size: 20px;
+    font-size: 16px;
     width: 25vw;
     text-align: center;
     color: $main-color3;
+    border: 1px solid $main-color;
+    border-radius: 5px;
+    padding: 0.2rem;
   }
 }
 .alert {

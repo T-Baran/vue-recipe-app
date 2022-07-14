@@ -3,6 +3,7 @@ import { reactive } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import FilterItem from "./FilterItem.vue";
 import CaloriesItem from "./CaloriesItem.vue";
+import ExcludeItem from "./ExcludeItem.vue";
 
 const recipeStore = useRecipeStore();
 
@@ -52,6 +53,7 @@ const healthType = [
     route="healthType"
   />
   <CaloriesItem title="Calories per serving" route="calories" />
+  <ExcludeItem title="Exclude ingredients" />
   <button @click.prevent="recipeStore.clearAll()">Clear all</button>
 </template>
 <style scoped lang="scss">
