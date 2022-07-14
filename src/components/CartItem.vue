@@ -65,7 +65,12 @@ function removeFromCart() {
 .container {
   padding: 2rem;
   color: $main-color3;
-  width: Max(70%, 330px);
+  width: Max(70%, 300px);
+  @include media {
+    padding: 0;
+    width: 300px;
+    margin-bottom: 2rem;
+  }
 }
 .title-container {
   display: flex;
