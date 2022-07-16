@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onBeforeMount } from "vue";
+import { reactive, onBeforeMount, onMounted } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import RecipeComponent from "./RecipeComponent.vue";
 
@@ -11,47 +11,81 @@ const state = reactive({
     showEntrees: true,
     showDesserts: false,
   },
-  showRecipe: false,
+  allowInfinite: true,
+  query: "entrees",
 });
+
+const nameToQuery = {
+  showAppetizers: "appetizer",
+  showDesserts: "dessert",
+  showEntrees: "entrees",
+};
 
 function chooseMenu(name) {
   state.startingMenu.showAppetizers = false;
   state.startingMenu.showEntrees = false;
   state.startingMenu.showDesserts = false;
   state.startingMenu[name] = true;
+  state.query = nameToQuery[name];
+  // console.log(state.query);
   // state.showRecipe = true;
 }
 
 onBeforeMount(() => {
-  recipeStore.fetchRecipe("entrees");
+  recipeStore.fetchRecipe("entrees", "new");
 });
+
+onMounted(() => {
+  window.addEventListener("scroll", () => {
+    if (!state.allowInfinite) return;
+    state.allowInfinite = false;
+    setTimeout(() => {
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 200
+      ) {
+        // console.log("test");
+        recipeStore.fetchRecipe(state.query);
+      }
+
+      state.allowInfinite = true;
+    }, 1000);
+  });
+});
+
+console.log(recipeStore.recipesData);
 </script>
 <template>
   <div class="basic-menu">
     <button
       :class="{ underline: state.startingMenu.showAppetizers }"
       @click="
-        chooseMenu('showAppetizers'), recipeStore.fetchRecipe('appetizer')
+        chooseMenu('showAppetizers'),
+          recipeStore.fetchRecipe('appetizer', 'new')
       "
     >
       Appetizers
     </button>
     <button
       :class="{ underline: state.startingMenu.showEntrees }"
-      @click="chooseMenu('showEntrees'), recipeStore.fetchRecipe('entrees')"
+      @click="
+        chooseMenu('showEntrees'), recipeStore.fetchRecipe('entrees', 'new')
+      "
     >
       Entrees
     </button>
     <button
       :class="{ underline: state.startingMenu.showDesserts }"
-      @click="chooseMenu('showDesserts'), recipeStore.fetchRecipe('dessert')"
+      @click="
+        chooseMenu('showDesserts'), recipeStore.fetchRecipe('dessert', 'new')
+      "
     >
       Desserts
     </button>
   </div>
-  <div v-if="recipeStore.showRecipes" class="container">
+  <div class="container">
     <RecipeComponent
-      v-for="item in recipeStore.recipesData.hits"
+      v-for="item in recipeStore.recipesData"
       :data="item"
       :key="item.label"
     />

@@ -1,7 +1,7 @@
 <script setup>
 import FilterOptions from "./FilterOptions.vue";
 import RecipeComponent from "./RecipeComponent.vue";
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 
 const recipeStore = useRecipeStore();
@@ -10,14 +10,33 @@ const state = reactive({
   showFilter: false,
   searchValue: "",
   showRecipes: false,
+  allowInfinite: true,
 });
 
 function searchRecipe() {
-  recipeStore.fetchRecipe(state.searchValue);
+  recipeStore.fetchRecipe(state.searchValue, "new");
   state.searchValue = "";
   state.showRecipes = true;
   state.showFilter = false;
 }
+
+onMounted(() => {
+  window.addEventListener("scroll", () => {
+    if (!state.allowInfinite) return;
+    state.allowInfinite = false;
+    setTimeout(() => {
+      if (
+        window.scrollY + window.innerHeight >=
+        document.body.scrollHeight - 200
+      ) {
+        // console.log("test");
+        recipeStore.fetchRecipe(state.searchValue);
+      }
+
+      state.allowInfinite = true;
+    }, 1000);
+  });
+});
 </script>
 <template>
   <form>
@@ -50,10 +69,7 @@ function searchRecipe() {
     </button>
   </form>
   <div v-if="state.showRecipes" class="recipes">
-    <RecipeComponent
-      v-for="item in recipeStore.recipesData.hits"
-      :data="item"
-    />
+    <RecipeComponent v-for="item in recipeStore.recipesData" :data="item" />
   </div>
 </template>
 <style scoped lang="scss">

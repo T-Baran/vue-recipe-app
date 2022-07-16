@@ -50,7 +50,7 @@ function afterModalDeleteCart() {
   state.cart = false;
   recipeStore.removeFromCart(props.data.recipe.label);
 }
-console.log(props.data);
+// console.log(props.data); tutaj wyświetlane są
 onMounted(() => {
   if (
     recipeStore.saved.saved.some((item) => {
