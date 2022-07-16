@@ -15,7 +15,7 @@ const state = reactive({
 
 function searchRecipe() {
   recipeStore.fetchRecipe(state.searchValue, "new");
-  state.searchValue = "";
+  // state.searchValue = "";
   state.showRecipes = true;
   state.showFilter = false;
 }

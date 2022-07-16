@@ -15,7 +15,7 @@ function addList() {
 }
 </script>
 <template>
-  <form>
+  <form autocomplete="off">
     <label for="title">List Name</label>
     <input v-model="state.name" id="title" type="text" />
     <button @click.prevent="addList()" type="submit">Add</button>

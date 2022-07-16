@@ -64,15 +64,15 @@ console.log(recipeStore.recipesData);
           recipeStore.fetchRecipe('appetizer', 'new')
       "
     >
-      Appetizers
+      Appetizer
     </button>
     <button
       :class="{ underline: state.startingMenu.showEntrees }"
       @click="
-        chooseMenu('showEntrees'), recipeStore.fetchRecipe('entrees', 'new')
+        chooseMenu('showEntrees'), recipeStore.fetchRecipe('main dish', 'new')
       "
     >
-      Entrees
+      Main Dish
     </button>
     <button
       :class="{ underline: state.startingMenu.showDesserts }"
@@ -80,7 +80,7 @@ console.log(recipeStore.recipesData);
         chooseMenu('showDesserts'), recipeStore.fetchRecipe('dessert', 'new')
       "
     >
-      Desserts
+      Dessert
     </button>
   </div>
   <div class="container">

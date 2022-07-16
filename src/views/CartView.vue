@@ -15,7 +15,11 @@ const state = reactive({
   <header>
     <p></p>
     <p class="title">Shopping List</p>
-    <fa @click="state.showCreate = !state.showCreate" icon="pen-to-square" />
+    <fa
+      class="icon"
+      @click="state.showCreate = !state.showCreate"
+      icon="pen-to-square"
+    />
   </header>
   <div class="cart-container">
     <CreateCart class="add-cart" v-if="state.showCreate" />
@@ -63,5 +67,8 @@ header {
 
 .add-cart {
   grid-column: 1/-1;
+}
+.icon {
+  cursor: pointer;
 }
 </style>

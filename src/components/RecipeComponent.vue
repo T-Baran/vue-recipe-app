@@ -163,6 +163,9 @@ onMounted(() => {
     height: 60%;
   }
 }
+.like-button:hover {
+  background-color: $main-color;
+}
 .cart {
   top: 80px;
 }
