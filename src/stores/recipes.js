@@ -51,46 +51,51 @@ export const useRecipeStore = defineStore({
   },
   actions: {
     async fetchRecipe(query, status = "continue") {
-      const id = "5203a72b";
-      const key = "83eb0b5b0b385cfaa6f37343d2dcece5";
+      try {
+        const id = "5203a72b";
+        const key = "83eb0b5b0b385cfaa6f37343d2dcece5";
 
-      const res = await fetch(
-        `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
-          ""
-        )}${this.calculateFilterCuisine.join(
-          ""
-        )}${this.calculateFilterMeal.join("")}
-        ${this.calculateFilterHealth.join("")}
+        const res = await fetch(
+          `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
+            ""
+          )}${this.calculateFilterCuisine.join(
+            ""
+          )}${this.calculateFilterMeal.join("")}
+            ${this.calculateFilterHealth.join("")}
         ${
           this.calories[0] === 0 && this.calories[1] === 0
             ? ""
             : this.calculateFilterCalories
         }${this.calculateExcludedIngredients.join("")}`
-      );
-      const data = await res.json();
+        );
+        const data = await res.json();
 
-      if (status === "new") {
-        this.recipesData = data.hits;
-        // console.log("single");
-      } else {
-        this.recipesData = [...this.recipesData, ...data.hits];
-        // console.log("add");
+        if (status === "new") {
+          this.recipesData = data.hits;
+          // console.log("single");
+        } else {
+          this.recipesData = [...this.recipesData, ...data.hits];
+          // console.log("add");
+        }
+        // this.recipesData = [...this.recipesData, ...data.hits];
+        console.log(data.hits);
+        // console.log(this.recipesData);
+        console.log(`https://api.edamam.com/api/recipes/v2?type=public&beta=true&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
+          ""
+        )}${this.calculateFilterCuisine.join(
+          ""
+        )}${this.calculateFilterMeal.join("")}
+          ${this.calculateFilterHealth.join("")}
+      ${
+        this.calories[0] === 0 && this.calories[1] === 0
+          ? ""
+          : this.calculateFilterCalories
+      }${this.calculateExcludedIngredients.join("")}`);
+      } catch (e) {
+        console.log(e);
       }
-      // this.recipesData = [...this.recipesData, ...data.hits];
-      console.log(data.hits);
-      console.log(this.recipesData);
-      // console.log(`https://api.edamam.com/api/recipes/v2?type=public&beta=true&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
-      //   ""
-      // )}${this.calculateFilterCuisine.join("")}${this.calculateFilterMeal.join(
-      //   ""
-      // )}
-      // ${this.calculateFilterHealth.join("")}
-      // ${
-      //   this.calories[0] === 0 && this.calories[1] === 0
-      //     ? ""
-      //     : this.calculateFilterCalories
-      // }${this.calculateExcludedIngredients.join("")}`);
     },
+
     clearAll() {
       this.dietType = [];
       this.cuisineType = [];

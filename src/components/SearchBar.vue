@@ -1,7 +1,7 @@
 <script setup>
 import FilterOptions from "./FilterOptions.vue";
 import RecipeComponent from "./RecipeComponent.vue";
-import { reactive, onMounted } from "vue";
+import { reactive, onMounted, onBeforeUnmount } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 
 const recipeStore = useRecipeStore();
@@ -19,23 +19,31 @@ function searchRecipe() {
   state.showRecipes = true;
   state.showFilter = false;
 }
+console.log(state.showRecipes);
+
+function infiniteScrollFetch() {
+  if (!state.allowInfinite) return;
+  if (!state.showRecipes) return;
+  state.allowInfinite = false;
+
+  setTimeout(() => {
+    if (
+      window.scrollY + window.innerHeight >=
+      document.body.scrollHeight - 200
+    ) {
+      // console.log("test");
+      recipeStore.fetchRecipe(state.searchValue);
+    }
+
+    state.allowInfinite = true;
+  }, 1000);
+}
 
 onMounted(() => {
-  window.addEventListener("scroll", () => {
-    if (!state.allowInfinite) return;
-    state.allowInfinite = false;
-    setTimeout(() => {
-      if (
-        window.scrollY + window.innerHeight >=
-        document.body.scrollHeight - 200
-      ) {
-        // console.log("test");
-        recipeStore.fetchRecipe(state.searchValue);
-      }
-
-      state.allowInfinite = true;
-    }, 1000);
-  });
+  window.addEventListener("scroll", infiniteScrollFetch);
+});
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", infiniteScrollFetch);
 });
 </script>
 <template>

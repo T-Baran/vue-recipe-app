@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onBeforeMount, onMounted } from "vue";
+import { reactive, onBeforeMount, onMounted, onBeforeUnmount } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import RecipeComponent from "./RecipeComponent.vue";
 
@@ -31,26 +31,33 @@ function chooseMenu(name) {
   // state.showRecipe = true;
 }
 
+function infiniteScrollFetch() {
+  if (!state.allowInfinite) return;
+  state.allowInfinite = false;
+  setTimeout(() => {
+    if (
+      window.scrollY + window.innerHeight >=
+      document.body.scrollHeight - 200
+    ) {
+      // console.log("testbasicview");
+      recipeStore.fetchRecipe(state.query);
+    }
+
+    state.allowInfinite = true;
+  }, 1000);
+}
+
 onBeforeMount(() => {
   recipeStore.fetchRecipe("entrees", "new");
 });
 
 onMounted(() => {
-  window.addEventListener("scroll", () => {
-    if (!state.allowInfinite) return;
-    state.allowInfinite = false;
-    setTimeout(() => {
-      if (
-        window.scrollY + window.innerHeight >=
-        document.body.scrollHeight - 200
-      ) {
-        // console.log("test");
-        recipeStore.fetchRecipe(state.query);
-      }
-
-      state.allowInfinite = true;
-    }, 1000);
-  });
+  window.addEventListener("scroll", infiniteScrollFetch);
+  console.log("mounted");
+});
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", infiniteScrollFetch);
+  console.log("unmounted");
 });
 
 console.log(recipeStore.recipesData);

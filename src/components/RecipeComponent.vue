@@ -211,7 +211,7 @@ onMounted(() => {
   color: $main-color3;
 
   ul {
-    list-style: disc;
+    /* list-style: disc; */
   }
   li,
   p {
@@ -219,7 +219,7 @@ onMounted(() => {
     text-align: center;
   }
   li {
-    list-style-position: inside;
+    /* list-style-position: inside; */
   }
 }
 .ingredients-header {
