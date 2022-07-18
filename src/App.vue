@@ -91,11 +91,14 @@ function sideBar() {
 
   @include media {
     grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
-    justify-items: center;
+    /* justify-content: center; */
+    /* justify-items: center; */
+    margin-inline: auto;
     align-content: center;
     align-items: center;
     height: 100%;
     gap: 3rem;
+    max-width: 2000px;
     & * {
       text-align: center;
     }
@@ -125,8 +128,8 @@ function sideBar() {
   bottom: 1rem;
   @include media {
     position: static;
-    justify-self: right;
-    margin-right: 10px;
+    justify-self: center;
+    /* margin-right: 10px; */
   }
 }
 </style>

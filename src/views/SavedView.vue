@@ -35,9 +35,8 @@ header {
   }
 
   @include media {
-    margin: 30px 0 0 0;
+    margin: 30px auto 30px;
     width: 50vw;
-    margin-inline: auto;
   }
 }
 .saved-container {
