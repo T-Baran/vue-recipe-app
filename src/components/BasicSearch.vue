@@ -110,7 +110,7 @@ console.log(recipeStore.recipesData);
   color: $main-color3;
 
   @include media {
-    width: Min(70vw, 2000px);
+    width: Min(70vw, 1500px);
     margin: 1rem auto;
   }
   & > button {
@@ -138,7 +138,7 @@ console.log(recipeStore.recipesData);
 
   @include media {
     grid-template-columns: repeat(3, 1fr);
-    width: Min(70vw, 2000px);
+    width: Min(70vw, 1500px);
     margin-inline: auto;
   }
 }

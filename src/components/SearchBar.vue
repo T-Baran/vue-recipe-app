@@ -134,7 +134,7 @@ input {
 
   @include media {
     grid-template-columns: repeat(3, 1fr);
-    width: Min(70vw, 2000px);
+    width: Min(70vw, 1500px);
     margin-inline: auto;
   }
 }
