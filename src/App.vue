@@ -91,13 +91,14 @@ function sideBar() {
 
   @include media {
     grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
-    /* flex-direction: row; */
-    /* align-items: center; */
     justify-items: center;
     align-content: center;
     align-items: center;
     height: 100%;
     gap: 3rem;
+    & * {
+      text-align: center;
+    }
   }
 }
 .close-main {

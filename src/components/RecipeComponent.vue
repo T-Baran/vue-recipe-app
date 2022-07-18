@@ -104,12 +104,16 @@ onMounted(() => {
     />
     <div class="data-container">
       <p class="recipe-label">{{ props.data.recipe.label }}</p>
-      <div class="time-calories">
-        <div class="calories-item">
+      <div class="parameters-container">
+        <div class="parameters-item">
           <fa class="icon" icon="bowl-food" />
           <p>{{ Math.round(props.data.recipe.calories) }} kcal</p>
         </div>
-        <div class="calories-item">
+        <div class="parameters-item">
+          <fa class="icon" icon="users" />
+          <p>{{ props.data.recipe.yield }}</p>
+        </div>
+        <div class="parameters-item">
           <fa class="icon" icon="hourglass" />
           <p>{{ props.data.recipe.totalTime }} min</p>
         </div>
@@ -191,12 +195,12 @@ onMounted(() => {
   font-size: 20px;
   font-weight: 700;
 }
-.time-calories {
+.parameters-container {
   display: flex;
   justify-content: space-around;
   width: 100%;
 }
-.calories-item {
+.parameters-item {
   display: flex;
   gap: 0.5rem;
   & > * {
