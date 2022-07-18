@@ -13,24 +13,29 @@ function sideBar() {
 </script>
 
 <template>
-  <fa class="menu-main" icon="bars" @click="sideBar()" />
-  <div class="wrapper-main" :class="{ hideLeftMain: !state.showSideBar }">
-    <fa class="close-main" icon="x" @click="sideBar()" />
-    <nav class="nav-main">
-      <p class="title">Recipe App</p>
-      <RouterLink to="/" @click="sideBar()">Recipe Search</RouterLink>
-      <RouterLink to="/saved" @click="sideBar()">Saved Recipes</RouterLink>
-      <Router-link to="/cart" @click="sideBar()">Shopping List</Router-link>
-      <div class="edamam" id="edamam-badge" data-color="white"></div>
-    </nav>
-  </div>
+  <div class="app">
+    <fa class="menu-main" icon="bars" @click="sideBar()" />
+    <div class="wrapper-main" :class="{ hideLeftMain: !state.showSideBar }">
+      <fa class="close-main" icon="x" @click="sideBar()" />
+      <nav class="nav-main">
+        <p class="title">Recipe App</p>
+        <RouterLink to="/" @click="sideBar()">Recipe Search</RouterLink>
+        <RouterLink to="/saved" @click="sideBar()">Saved Recipes</RouterLink>
+        <Router-link to="/cart" @click="sideBar()">Shopping List</Router-link>
+        <div class="edamam" id="edamam-badge" data-color="white"></div>
+      </nav>
+    </div>
 
-  <RouterView />
+    <RouterView />
+  </div>
 </template>
 
 <style scoped lang="scss">
 @import "./assets/variables.scss";
 
+.app {
+  overflow: hidden;
+}
 .wrapper-main {
   background-color: $main-color;
   width: 300px;
@@ -40,8 +45,9 @@ function sideBar() {
   z-index: 3;
 
   @include media {
-    width: 100vw;
+    width: 100%;
     height: 75px;
+    position: static;
   }
 }
 .hideLeftMain {
@@ -58,7 +64,7 @@ function sideBar() {
   width: 40px;
   height: 40px;
   color: $main-color;
-
+  cursor: pointer;
   @include media {
     display: none;
   }
@@ -79,12 +85,16 @@ function sideBar() {
     text-decoration: none;
     font-weight: 700;
   }
+  & *:focus {
+    outline: none;
+  }
 
   @include media {
     grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
     /* flex-direction: row; */
     /* align-items: center; */
     justify-items: center;
+    align-content: center;
     align-items: center;
     height: 100%;
     gap: 3rem;

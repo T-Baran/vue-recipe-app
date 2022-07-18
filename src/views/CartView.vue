@@ -45,7 +45,7 @@ header {
   margin-bottom: 3rem;
 
   @include media {
-    padding: 120px 0 20px 0;
+    margin: 30px 0 0 0;
     width: 50vw;
     margin-inline: auto;
     justify-content: center;
