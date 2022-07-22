@@ -23,7 +23,9 @@ console.log(props.recipe);
 </script>
 <template>
   <div v-if="state.hidden" class="container">
-    <p class="title">{{ props.recipe.label }}</p>
+    <div class="title-center">
+      <p class="title">{{ props.recipe.label }}</p>
+    </div>
     <p @click="fetchRecipe()" class="details">
       Load full recipe <fa icon="angles-down" />
     </p>
@@ -44,6 +46,13 @@ console.log(props.recipe);
   gap: 1rem;
   margin-bottom: 2rem;
   align-self: start;
+}
+.title-center {
+  @include flexCenter;
+  @include mediaMid {
+    width: 100%;
+    min-height: 80px;
+  }
 }
 .title {
   font-size: 20px;

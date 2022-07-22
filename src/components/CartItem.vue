@@ -37,27 +37,33 @@ function removeFromCart() {
     >
       <fa v-if="state.showIngredients" class="icon" icon="angles-up" />
       <fa v-else class="icon" icon="angles-down" />
-      <p class="title">
-        {{ props.name }}
-      </p>
+      <div class="title-center">
+        <p class="title">
+          {{ props.name }}
+        </p>
+      </div>
       <fa @click="state.modalList = true" icon="x" />
     </div>
-    <div v-if="state.showIngredients" class="ingredients-container">
-      <div @click="state.edit = !state.edit" class="edit">
-        <p v-if="!state.edit">Show edit options</p>
-        <p v-else>Hide edit options</p>
+    <Transition name="fade">
+      <div v-if="state.showIngredients" class="ingredients-container">
+        <div @click="state.edit = !state.edit" class="edit">
+          <p v-if="!state.edit">Show edit options</p>
+          <p v-else>Hide edit options</p>
+        </div>
+        <Transition name="fade">
+          <CreateIngredient v-if="state.edit" :name="props.name" />
+        </Transition>
+        <ul>
+          <CartIngredient
+            v-for="item in ingredients"
+            :name="props.name"
+            :ingredient="item"
+            :key="recipeStore.randomKey()"
+            :edit="state.edit"
+          />
+        </ul>
       </div>
-      <CreateIngredient v-if="state.edit" :name="props.name" />
-      <ul>
-        <CartIngredient
-          v-for="item in ingredients"
-          :name="props.name"
-          :ingredient="item"
-          :key="item.text"
-          :edit="state.edit"
-        />
-      </ul>
-    </div>
+    </Transition>
   </div>
 </template>
 <style scoped lang="scss">
@@ -66,16 +72,17 @@ function removeFromCart() {
   padding: 2rem;
   color: $main-color3;
   width: Max(70%, 300px);
-  @include mediaBig {
+  @include mediaMid {
     padding: 0;
     width: 300px;
     margin-bottom: 2rem;
+    /* width: Min(80%, 400px); */
   }
 }
 .title-container {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
   gap: 1rem;
   margin-bottom: 0.8rem;
   padding-bottom: 0.5rem;
@@ -83,15 +90,18 @@ function removeFromCart() {
   cursor: pointer;
   /* width: 100%; */
 }
+.title-center {
+  @include flexCenter;
+  @include mediaMid {
+    width: 100%;
+    min-height: 80px;
+  }
+}
 .title {
   font-size: 20px;
   text-align: center;
-  /* width: fit-content; */
-  overflow-wrap: anywhere;
 
-  @include mediaBig {
-    width: 20vw;
-  }
+  overflow-wrap: anywhere;
 }
 .edit {
   display: flex;
@@ -105,5 +115,18 @@ function removeFromCart() {
   p {
     font-size: 20px;
   }
+}
+
+//transitions
+.fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -107,6 +107,7 @@ li {
   padding: 0.7rem 0 0.7rem 0.3rem;
   p {
     overflow-wrap: anywhere;
+    transition: 0.5s;
   }
   .editable {
     outline: 1px solid $main-color;
@@ -133,11 +134,16 @@ button {
   align-items: center;
   background-color: inherit;
   border: none;
+  transition: transform 0.2s;
+
   & > * {
     width: 25px;
     height: 25px;
     padding: 5px;
     color: $side-color;
+  }
+  &:hover {
+    transform: scale(1.2);
   }
 }
 .delete {

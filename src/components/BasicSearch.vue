@@ -123,6 +123,7 @@ onBeforeUnmount(() => {
     transition: 0.1s;
 
     @include mediaBig {
+      border-bottom: 2px solid #fff;
       font-size: 30px;
       &:hover {
         color: $side-color;

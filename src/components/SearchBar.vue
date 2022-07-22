@@ -66,7 +66,9 @@ onBeforeUnmount(() => {
       Hide filters
       <fa icon="angles-up" />
     </p>
-    <FilterOptions v-if="state.showFilter" />
+    <transition name="fade">
+      <FilterOptions v-if="state.showFilter" />
+    </transition>
 
     <button
       :disabled="recipeStore.stopSearch"
@@ -144,5 +146,17 @@ input {
     margin-inline: auto;
   } */
   @include recipeStyle;
+}
+//transitions
+.fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

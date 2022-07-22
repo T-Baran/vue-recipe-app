@@ -22,7 +22,9 @@ const state = reactive({
     />
   </header>
   <div class="cart-container">
-    <CreateCart class="add-cart" v-if="state.showCreate" />
+    <transition name="fade">
+      <CreateCart class="add-cart" v-if="state.showCreate" />
+    </transition>
     <CartItem
       v-for="item in recipeStore.cart.cart"
       key="item.label"
@@ -73,5 +75,17 @@ header {
 }
 .icon:hover {
   transform: scale(1.4);
+}
+//transitions
+.fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

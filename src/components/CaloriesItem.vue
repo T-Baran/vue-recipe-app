@@ -68,6 +68,7 @@ function compareCalories() {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px 1px;
+  margin-bottom: 2rem;
 
   & > * {
     color: $main-color3;

@@ -30,6 +30,7 @@ form {
   align-items: center;
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 label {
   font-size: 20px;

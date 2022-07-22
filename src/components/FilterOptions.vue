@@ -41,23 +41,27 @@ const healthType = [
 // }
 </script>
 <template>
-  <FilterItem title="Diet Type" :data="dietType" route="dietType" />
+  <div>
+    <FilterItem title="Diet Type" :data="dietType" route="dietType" />
 
-  <FilterItem title="Cuisine Type" :data="cuisineType" route="cuisineType" />
+    <FilterItem title="Cuisine Type" :data="cuisineType" route="cuisineType" />
 
-  <FilterItem title="Meal Type" :data="mealType" route="mealType" />
+    <FilterItem title="Meal Type" :data="mealType" route="mealType" />
 
-  <FilterItem
-    title="Health Restriction"
-    :data="healthType"
-    route="healthType"
-  />
-  <CaloriesItem title="Calories per serving" route="calories" />
-  <ExcludeItem title="Exclude ingredients" />
-  <button @click.prevent="recipeStore.clearAll()">Clear all</button>
+    <FilterItem
+      title="Health Restriction"
+      :data="healthType"
+      route="healthType"
+    />
+    <CaloriesItem title="Calories per serving" route="calories" />
+    <ExcludeItem title="Exclude ingredients" />
+    <button @click.prevent="recipeStore.clearAll()">Clear all</button>
+  </div>
 </template>
 <style scoped lang="scss">
 @import "../assets/variables.scss";
+div {
+}
 button {
   border: none;
   background-color: $main-color;
@@ -67,6 +71,7 @@ button {
   padding: 0.5rem 0.75rem;
   border-radius: 10px;
   letter-spacing: 2px;
+  display: block;
   margin-inline: auto;
 }
 </style>
