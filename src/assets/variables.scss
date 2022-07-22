@@ -4,8 +4,13 @@ $main-color3: rgb(108, 108, 108);
 $side-color: rgb(54, 54, 54);
 $side-color2: rgb(216, 180, 180);
 
-@mixin media {
-  @media (min-width: 1000px) {
+@mixin mediaBig {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin mediaMid {
+  @media (min-width: 650px) {
     @content;
   }
 }
@@ -17,9 +22,19 @@ $side-color2: rgb(216, 180, 180);
   justify-items: center;
   column-gap: 1rem;
 
-  @include media {
+  @include mediaMid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 70vw;
+    margin-inline: auto;
+    align-items: start;
+  }
+  @include mediaBig {
     grid-template-columns: repeat(3, 1fr);
     width: Min(70vw, 1500px);
-    margin-inline: auto;
   }
+}
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -66,7 +66,7 @@ function removeFromCart() {
   padding: 2rem;
   color: $main-color3;
   width: Max(70%, 300px);
-  @include media {
+  @include mediaBig {
     padding: 0;
     width: 300px;
     margin-bottom: 2rem;
@@ -89,7 +89,7 @@ function removeFromCart() {
   /* width: fit-content; */
   overflow-wrap: anywhere;
 
-  @include media {
+  @include mediaBig {
     width: 20vw;
   }
 }

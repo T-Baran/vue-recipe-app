@@ -44,7 +44,7 @@ header {
   color: $main-color;
   margin-bottom: 3rem;
 
-  @include media {
+  @include mediaBig {
     margin: 30px auto 30px;
     width: 50vw;
     justify-content: center;
@@ -69,5 +69,9 @@ header {
 }
 .icon {
   cursor: pointer;
+  transition: transform 0.4s;
+}
+.icon:hover {
+  transform: scale(1.4);
 }
 </style>

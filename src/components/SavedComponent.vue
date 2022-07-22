@@ -29,7 +29,7 @@ console.log(props.recipe);
     </p>
   </div>
   <div v-else>
-    <RecipeComponent :data="state.data" />
+    <RecipeComponent :data="state.data" :shorten="false" />
   </div>
 </template>
 <style scoped lang="scss">

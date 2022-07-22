@@ -17,7 +17,7 @@ export const useRecipeStore = defineStore({
     healthType: [],
     excludedIngredient: [],
     calories: [0, 0],
-    stopSearch: false,
+    showSearch: false,
   }),
   getters: {
     calculateFilterDiet: (state) => {
@@ -56,7 +56,7 @@ export const useRecipeStore = defineStore({
         const key = "83eb0b5b0b385cfaa6f37343d2dcece5";
 
         const res = await fetch(
-          `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
+          `https://api.edamam.com/api/recipes/v2?type=public&q=${query}&app_id=${id}&app_key=${key}&random=true&imageSize=REGULAR${this.calculateFilterDiet.join(
             ""
           )}${this.calculateFilterCuisine.join(
             ""
@@ -77,25 +77,30 @@ export const useRecipeStore = defineStore({
           this.recipesData = [...this.recipesData, ...data.hits];
           // console.log("add");
         }
+
         // this.recipesData = [...this.recipesData, ...data.hits];
-        console.log(data.hits);
+        // console.log(data.hits);
         // console.log(this.recipesData);
-        console.log(`https://api.edamam.com/api/recipes/v2?type=public&beta=true&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
-          ""
-        )}${this.calculateFilterCuisine.join(
-          ""
-        )}${this.calculateFilterMeal.join("")}
-          ${this.calculateFilterHealth.join("")}
-      ${
-        this.calories[0] === 0 && this.calories[1] === 0
-          ? ""
-          : this.calculateFilterCalories
-      }${this.calculateExcludedIngredients.join("")}`);
+        //   console.log(`https://api.edamam.com/api/recipes/v2?type=public&beta=true&q=${query}&app_id=${id}&app_key=${key}&random=true${this.calculateFilterDiet.join(
+        //     ""
+        //   )}${this.calculateFilterCuisine.join(
+        //     ""
+        //   )}${this.calculateFilterMeal.join("")}
+        //     ${this.calculateFilterHealth.join("")}
+        // ${
+        //   this.calories[0] === 0 && this.calories[1] === 0
+        //     ? ""
+        //     : this.calculateFilterCalories
+        // }${this.calculateExcludedIngredients.join("")}`);
       } catch (e) {
         console.log(e);
       }
     },
-
+    randomKey() {
+      return (
+        new Date().getTime() + Math.floor(Math.random() * 10000).toString()
+      );
+    },
     clearAll() {
       this.dietType = [];
       this.cuisineType = [];

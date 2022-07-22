@@ -54,7 +54,7 @@ header {
   padding-inline: 2rem;
   color: $main-color;
 
-  @include media {
+  @include mediaBig {
     margin: 30px 0 0 0;
     width: 50vw;
     margin-inline: auto;
@@ -73,7 +73,7 @@ header {
   font-size: 30px;
   font-weight: 700;
   margin-left: 2rem;
-  @include media {
+  @include mediaBig {
     margin: 0;
   }
 }
@@ -81,5 +81,9 @@ header {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  transition: transform 0.4s;
+}
+.icon:hover {
+  transform: scale(1.4);
 }
 </style>

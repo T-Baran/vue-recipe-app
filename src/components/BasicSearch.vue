@@ -13,6 +13,7 @@ const state = reactive({
   },
   allowInfinite: true,
   query: "entrees",
+  windowWidth: window.innerWidth,
 });
 
 const nameToQuery = {
@@ -60,7 +61,7 @@ onBeforeUnmount(() => {
   console.log("unmounted");
 });
 
-console.log(recipeStore.recipesData);
+// console.log(recipeStore.recipesData[0].label);
 </script>
 <template>
   <div class="basic-menu">
@@ -94,7 +95,8 @@ console.log(recipeStore.recipesData);
     <RecipeComponent
       v-for="item in recipeStore.recipesData"
       :data="item"
-      :key="item.label"
+      :key="recipeStore.randomKey()"
+      :shorten="true"
     />
   </div>
 </template>
@@ -109,7 +111,7 @@ console.log(recipeStore.recipesData);
   width: 80vw;
   color: $main-color3;
 
-  @include media {
+  @include mediaBig {
     width: Min(70vw, 1500px);
     margin: 1rem auto;
   }
@@ -118,9 +120,15 @@ console.log(recipeStore.recipesData);
     border-bottom: 2px solid inherit;
     background-color: inherit;
     color: $main-color3;
+    transition: 0.1s;
 
-    @include media {
+    @include mediaBig {
       font-size: 30px;
+      &:hover {
+        color: $side-color;
+        /* font-weight: 700; */
+        border-bottom: 2px solid $side-color;
+      }
     }
   }
   .underline {
@@ -130,16 +138,6 @@ console.log(recipeStore.recipesData);
   }
 }
 .container {
-  display: grid;
-  grid-template-columns: 1fr;
-  justify-content: center;
-  justify-items: center;
-  column-gap: 1rem;
-
-  @include media {
-    grid-template-columns: repeat(3, 1fr);
-    width: Min(70vw, 1500px);
-    margin-inline: auto;
-  }
+  @include recipeStyle;
 }
 </style>

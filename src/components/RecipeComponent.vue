@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onBeforeMount, onMounted } from "vue";
+import { reactive, onUpdated, onMounted, onUnmounted, watch } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import ModalDelete from "./ModalDelete.vue";
 
@@ -10,17 +10,23 @@ const state = reactive({
   modalLike: false,
   modalCart: false,
   cart: false,
+  shortened: false,
+  newIngredientList: [],
+  showFullIngredients: false,
+  windowWidth: window.innerWidth > 650,
 });
 
 const props = defineProps({
   data: Object,
+  shorten: Boolean,
+  token: String,
 });
+
+// console.log(props.token);
 
 function addToLiked() {
   if (state.like) {
     state.modalLike = true;
-    // recipeStore.removeFromLiked(props.data._links.self.href);
-    // console.log("chce usunąć");
   } else {
     state.like = true;
     recipeStore.addToLiked(
@@ -50,7 +56,7 @@ function afterModalDeleteCart() {
   state.cart = false;
   recipeStore.removeFromCart(props.data.recipe.label);
 }
-// console.log(props.data); tutaj wyświetlane są
+
 onMounted(() => {
   if (
     recipeStore.saved.saved.some((item) => {
@@ -65,6 +71,16 @@ onMounted(() => {
     })
   ) {
     state.cart = true;
+  }
+  if (props.shorten && state.windowWidth) {
+    if (props.data.recipe.ingredientLines.length >= 4) {
+      state.newIngredientList = props.data.recipe.ingredientLines.slice(0, 4);
+      state.shortened = true;
+    } else {
+      state.newIngredientList = [...props.data.recipe.ingredientLines];
+    }
+  } else {
+    state.showFullIngredients = true;
   }
 });
 </script>
@@ -103,7 +119,9 @@ onMounted(() => {
       alt="food photo"
     />
     <div class="data-container">
-      <p class="recipe-label">{{ props.data.recipe.label }}</p>
+      <div class="flex-center">
+        <p class="recipe-label">{{ props.data.recipe.label }}</p>
+      </div>
       <div class="parameters-container">
         <div class="parameters-item">
           <fa class="icon" icon="bowl-food" />
@@ -122,11 +140,50 @@ onMounted(() => {
       <p class="cuisine">Cuisine: {{ props.data.recipe.cuisineType[0] }}</p>
       <div class="ingredients-list">
         <p class="ingredients-header">Ingredients list:</p>
-        <ul>
-          <li v-for="ingredient in props.data.recipe.ingredientLines">
-            {{ ingredient }}
-          </li>
-        </ul>
+        <div
+          @dblclick="state.showFullIngredients = !state.showFullIngredients"
+          v-if="props.shorten"
+        >
+          <ul v-if="!state.showFullIngredients">
+            <li v-for="ingredient in state.newIngredientList" :key="ingredient">
+              {{ ingredient }}
+            </li>
+          </ul>
+          <ul v-else>
+            <li
+              v-for="ingredient in props.data.recipe.ingredientLines"
+              :key="ingredient"
+            >
+              {{ ingredient }}
+            </li>
+          </ul>
+        </div>
+        <div v-else>
+          <ul>
+            <li
+              v-for="ingredient in props.data.recipe.ingredientLines"
+              :key="ingredient"
+            >
+              {{ ingredient }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div :class="{ ingredientsButtonHidden: !state.shortened }">
+        <button
+          v-if="!state.showFullIngredients"
+          @click="state.showFullIngredients = !state.showFullIngredients"
+          class="ingredients-button"
+        >
+          Show full list of ingredients
+        </button>
+        <button
+          v-else
+          @click="state.showFullIngredients = !state.showFullIngredients"
+          class="ingredients-button"
+        >
+          Hide full list of ingredients
+        </button>
       </div>
       <button class="button">
         <a target="_blank" :href="props.data.recipe.url"
@@ -140,7 +197,7 @@ onMounted(() => {
 @import "../assets/variables.scss";
 .container {
   width: 300px;
-  min-height: 700px;
+  min-height: fit-content;
   margin-inline: auto;
   box-shadow: 0 0 30px -15px $side-color2;
   border-radius: 25px;
@@ -189,6 +246,10 @@ onMounted(() => {
   height: 300px;
   font-size: 0px;
 }
+.flex-center {
+  min-height: 60px;
+  @include flexCenter;
+}
 .recipe-label {
   text-align: center;
   color: $main-color;
@@ -215,7 +276,11 @@ onMounted(() => {
   color: $main-color3;
 
   ul {
-    /* list-style: disc; */
+    min-height: 205px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
   }
   li,
   p {
@@ -243,5 +308,13 @@ onMounted(() => {
     color: #fff;
     text-decoration: none;
   }
+}
+.ingredients-button {
+  border: none;
+  background-color: inherit;
+  color: $main-color;
+}
+.ingredientsButtonHidden {
+  visibility: hidden;
 }
 </style>

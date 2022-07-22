@@ -11,6 +11,7 @@ const state = reactive({
   searchValue: "",
   showRecipes: false,
   allowInfinite: true,
+  windowWidth: window.innerWidth,
 });
 
 function searchRecipe() {
@@ -77,7 +78,12 @@ onBeforeUnmount(() => {
     </button>
   </form>
   <div v-if="state.showRecipes" class="recipes">
-    <RecipeComponent v-for="item in recipeStore.recipesData" :data="item" />
+    <RecipeComponent
+      v-for="item in recipeStore.recipesData"
+      :data="item"
+      :key="recipeStore.randomKey()"
+      :shorten="true"
+    />
   </div>
 </template>
 <style scoped lang="scss">
@@ -90,7 +96,7 @@ form {
   gap: 2rem;
   margin-top: 2rem;
 
-  @include media {
+  @include mediaBig {
     width: Clamp(600px, 50vw, 800px);
     margin-inline: auto;
   }
@@ -126,16 +132,17 @@ input {
   margin-bottom: 2rem;
 }
 .recipes {
-  display: grid;
+  /* display: grid;
   grid-template-columns: 1fr;
   justify-content: center;
   justify-items: center;
   column-gap: 1rem;
 
-  @include media {
+  @include mediaBig {
     grid-template-columns: repeat(3, 1fr);
     width: Min(70vw, 1500px);
     margin-inline: auto;
-  }
+  } */
+  @include recipeStyle;
 }
 </style>

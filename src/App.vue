@@ -40,11 +40,11 @@ function sideBar() {
   background-color: $main-color;
   width: 300px;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   transition: 0.5s;
   z-index: 3;
 
-  @include media {
+  @include mediaBig {
     width: 100%;
     height: 75px;
     position: static;
@@ -53,7 +53,7 @@ function sideBar() {
 .hideLeftMain {
   transform: translateX(-350px);
 
-  @include media {
+  @include mediaBig {
     transform: translateX(0px);
   }
 }
@@ -65,7 +65,7 @@ function sideBar() {
   height: 40px;
   color: $main-color;
   cursor: pointer;
-  @include media {
+  @include mediaBig {
     display: none;
   }
 }
@@ -89,7 +89,7 @@ function sideBar() {
     outline: none;
   }
 
-  @include media {
+  @include mediaBig {
     grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
     /* justify-content: center; */
     /* justify-items: center; */
@@ -112,13 +112,13 @@ function sideBar() {
   width: 30px;
   height: 30px;
 
-  @include media {
+  @include mediaBig {
     display: none;
   }
 }
 .title {
   margin-bottom: 2rem;
-  @include media {
+  @include mediaBig {
     margin: 0;
     font-size: 32px;
   }
@@ -126,7 +126,7 @@ function sideBar() {
 .edamam {
   position: absolute;
   bottom: 1rem;
-  @include media {
+  @include mediaBig {
     position: static;
     justify-self: center;
     /* margin-right: 10px; */

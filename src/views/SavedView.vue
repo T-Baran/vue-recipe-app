@@ -34,7 +34,7 @@ header {
     font-weight: 700;
   }
 
-  @include media {
+  @include mediaBig {
     margin: 30px auto 30px;
     width: 50vw;
   }
