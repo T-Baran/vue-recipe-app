@@ -30,9 +30,7 @@ const props = defineProps({
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
 }
 .box {
   width: min(90vw, 400px);
@@ -52,9 +50,7 @@ const props = defineProps({
 }
 .button-selection {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-content: center;
+  @include flexCenter;
   button {
     padding: 0.75rem 0.75rem;
     font-size: 18px;

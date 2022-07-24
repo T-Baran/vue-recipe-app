@@ -27,7 +27,7 @@ const state = reactive({
     </transition>
     <CartItem
       v-for="item in recipeStore.cart.cart"
-      key="item.label"
+      :key="item.label"
       :name="item.label"
       :ingredients="item.ingredients"
     />

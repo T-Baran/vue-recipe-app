@@ -16,11 +16,9 @@ const state = reactive({
 
 function searchRecipe() {
   recipeStore.fetchRecipe(state.searchValue, "new");
-  // state.searchValue = "";
   state.showRecipes = true;
   state.showFilter = false;
 }
-console.log(state.showRecipes);
 
 function infiniteScrollFetch() {
   if (!state.allowInfinite) return;
@@ -32,7 +30,6 @@ function infiniteScrollFetch() {
       window.scrollY + window.innerHeight >=
       document.body.scrollHeight - 200
     ) {
-      // console.log("test");
       recipeStore.fetchRecipe(state.searchValue);
     }
 
@@ -113,9 +110,7 @@ input {
   font-size: 20px;
 }
 .filters {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   gap: 7px;
   width: fit-content;
   margin-inline: auto;
@@ -134,17 +129,6 @@ input {
   margin-bottom: 2rem;
 }
 .recipes {
-  /* display: grid;
-  grid-template-columns: 1fr;
-  justify-content: center;
-  justify-items: center;
-  column-gap: 1rem;
-
-  @include mediaBig {
-    grid-template-columns: repeat(3, 1fr);
-    width: Min(70vw, 1500px);
-    margin-inline: auto;
-  } */
   @include recipeStyle;
 }
 //transitions

@@ -20,7 +20,6 @@ const state = reactive({
 });
 
 function updateCart() {
-  console.log(props.ingredient.text);
   recipeStore.updateCart(props.name, props.ingredient.text);
   state.done = !state.done;
 }
@@ -30,18 +29,16 @@ function updateCartName() {
     state.updateName = true;
   } else {
     state.updateName = false;
+    state.textArea = state.textAreaNew;
     recipeStore.updateCartName(
       props.name,
       props.ingredient.text,
       state.textAreaNew
     );
   }
-
-  // console.log(state.updateName);
 }
 function removeIngredient() {
   recipeStore.removeIngredient(props.name, props.ingredient.text);
-  console.log("wykonano");
 }
 
 onMounted(() => {
@@ -53,7 +50,6 @@ onMounted(() => {
     state.done = true;
   }
 });
-console.log(state.textArea);
 </script>
 <template>
   <ModalDelete
@@ -64,7 +60,6 @@ console.log(state.textArea);
   />
   <div class="ingredients-container">
     <li @dblclick="updateCart()">
-      <!-- <textarea v-if="state.updateName" v-model="state.textArea"></textarea> -->
       <p
         class="editable"
         contenteditable="true"
@@ -127,11 +122,7 @@ li {
   align-items: center;
 }
 button {
-  /* width: 35px; */
-  /* height: 35px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   background-color: inherit;
   border: none;
   transition: transform 0.2s;

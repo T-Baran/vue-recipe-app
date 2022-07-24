@@ -16,13 +16,12 @@ function addIngredient() {
   if (state.name === "") return;
   recipeStore.addIngredient(props.name, state.name);
   state.name = "";
-  console.log("coś powinno sie pokazać");
 }
 </script>
 <template>
   <form>
     <label for="title">Ingredient Name</label>
-    <input v-model="state.name" id="title" type="text" />
+    <input v-model="state.name" id="title" type="text" autocomplete="off" />
     <button @click.prevent="addIngredient()" type="submit">Add</button>
   </form>
 </template>
@@ -30,9 +29,7 @@ function addIngredient() {
 @import "../assets/variables.scss";
 
 form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   flex-direction: column;
   gap: 1rem;
   margin: 1.5rem 0;

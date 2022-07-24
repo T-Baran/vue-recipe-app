@@ -1,10 +1,8 @@
 <script setup>
-import { reactive, onBeforeMount } from "vue";
+import { reactive } from "vue";
 import { useRecipeStore } from "../stores/recipes";
-import RecipeComponent from "../components/RecipeComponent.vue";
 import SearchBar from "../components/SearchBar.vue";
 import BasicSearch from "../components/BasicSearch.vue";
-import ModalDelete from "../components/ModalDelete.vue";
 
 const recipeStore = useRecipeStore();
 
@@ -17,8 +15,6 @@ const state = reactive({
     showRecipe: false,
   },
 });
-
-console.log(recipeStore.recipesData);
 </script>
 
 <template>
@@ -48,7 +44,6 @@ console.log(recipeStore.recipesData);
 header {
   display: flex;
   justify-content: space-between;
-  /* justify-items: center; */
   align-items: center;
   height: 70px;
   padding-inline: 2rem;
@@ -60,8 +55,6 @@ header {
     margin-inline: auto;
     justify-content: center;
     gap: 2rem;
-    /* position: relative; */
-    /* top: 80px; */
   }
 }
 

@@ -22,30 +22,31 @@ const recipeStore = useRecipeStore();
       <fa v-if="state.showMenu" class="icon" icon="angles-up" />
       <fa v-else class="icon" icon="angles-down" />
     </div>
-
-    <div
-      v-if="state.showMenu"
-      v-for="diet in props.data"
-      :key="diet"
-      class="filter-type"
-    >
-      <label :for="diet">{{ diet }}</label>
-      <input
-        class="checkbox"
-        :value="diet"
-        v-model="recipeStore[props.route]"
-        type="checkbox"
-        :id="diet"
-      />
-    </div>
+    <transition name="fade">
+      <div class="selector-container" v-if="state.showMenu">
+        <div
+          v-for="diet in props.data"
+          :key="recipeStore.randomKey()"
+          class="filter-type"
+        >
+          <label :for="diet">{{ diet }}</label>
+          <input
+            class="checkbox"
+            :value="diet"
+            v-model="recipeStore[props.route]"
+            type="checkbox"
+            :id="diet"
+          />
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 <style scoped lang="scss">
 @import "../assets/variables.scss";
 .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 1px;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 2rem;
 
   & > * {
@@ -53,9 +54,7 @@ const recipeStore = useRecipeStore();
   }
 }
 .title-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   grid-column: span 2;
   gap: 1rem;
   margin-bottom: 1rem;
@@ -64,13 +63,16 @@ const recipeStore = useRecipeStore();
     justify-self: center;
     color: $main-color;
     font-size: 24px;
-    /* margin-bottom: 1rem; */
   }
   .icon {
     color: $main-color;
   }
 }
-
+.selector-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
 .filter-type {
   display: flex;
   justify-content: space-between;
@@ -90,5 +92,18 @@ const recipeStore = useRecipeStore();
 }
 .checkbox:checked {
   background-color: $main-color;
+}
+
+//transitions
+.fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

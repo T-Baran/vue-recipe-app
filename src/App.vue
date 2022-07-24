@@ -8,7 +8,6 @@ const state = reactive({
 
 function sideBar() {
   state.showSideBar = !state.showSideBar;
-  console.log(state.showSideBar);
 }
 </script>
 
@@ -91,8 +90,6 @@ function sideBar() {
 
   @include mediaBig {
     grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
-    /* justify-content: center; */
-    /* justify-items: center; */
     margin-inline: auto;
     align-content: center;
     align-items: center;
@@ -129,7 +126,6 @@ function sideBar() {
   @include mediaBig {
     position: static;
     justify-self: center;
-    /* margin-right: 10px; */
   }
 }
 </style>

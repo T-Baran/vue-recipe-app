@@ -30,19 +30,21 @@ function addExcludedIngredient() {
       <fa v-if="state.showMenu" class="icon" icon="angles-up" />
       <fa v-else class="icon" icon="angles-down" />
     </div>
-    <div v-if="state.showMenu" class="inputs">
-      <input
-        type="text"
-        v-model="state.excludedIngredient"
-        @keydown.enter.prevent="addExcludedIngredient()"
-      />
-      <button @click.prevent="addExcludedIngredient()">Add</button>
-    </div>
+    <transition name="fade">
+      <div v-if="state.showMenu" class="inputs">
+        <input
+          type="text"
+          v-model="state.excludedIngredient"
+          @keydown.enter.prevent="addExcludedIngredient()"
+        />
+        <button @click.prevent="addExcludedIngredient()">Add</button>
+      </div>
+    </transition>
     <div class="list">
       <div
         class="list-item"
         v-for="item in recipeStore.excludedIngredient"
-        key="item"
+        :key="item"
       >
         <p>
           {{ item }}
@@ -58,9 +60,6 @@ function addExcludedIngredient() {
 @import "../assets/variables.scss";
 
 .container {
-  /* display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 1px; */
   margin-bottom: 2rem;
 
   & > * {
@@ -68,9 +67,7 @@ function addExcludedIngredient() {
   }
 }
 .title-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   grid-column: span 2;
   gap: 1rem;
   margin-bottom: 1.5rem;
@@ -79,7 +76,6 @@ function addExcludedIngredient() {
     justify-self: center;
     color: $main-color;
     font-size: 24px;
-    /* margin-bottom: 1rem; */
   }
   .icon {
     color: $main-color;
@@ -106,7 +102,6 @@ function addExcludedIngredient() {
     border: none;
     background-color: $main-color;
     color: #fff;
-    /* font-size: 24px; */
     font-weight: 500;
     padding: 0.5rem 1rem;
     border-radius: 10px;
@@ -136,5 +131,17 @@ function addExcludedIngredient() {
       color: #fff;
     }
   }
+}
+//transitions
+.fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

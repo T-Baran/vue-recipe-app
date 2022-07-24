@@ -28,8 +28,6 @@ function chooseMenu(name) {
   state.startingMenu.showDesserts = false;
   state.startingMenu[name] = true;
   state.query = nameToQuery[name];
-  // console.log(state.query);
-  // state.showRecipe = true;
 }
 
 function infiniteScrollFetch() {
@@ -40,7 +38,6 @@ function infiniteScrollFetch() {
       window.scrollY + window.innerHeight >=
       document.body.scrollHeight - 200
     ) {
-      // console.log("testbasicview");
       recipeStore.fetchRecipe(state.query);
     }
 
@@ -54,14 +51,10 @@ onBeforeMount(() => {
 
 onMounted(() => {
   window.addEventListener("scroll", infiniteScrollFetch);
-  console.log("mounted");
 });
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", infiniteScrollFetch);
-  console.log("unmounted");
 });
-
-// console.log(recipeStore.recipesData[0].label);
 </script>
 <template>
   <div class="basic-menu">

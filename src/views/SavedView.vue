@@ -22,9 +22,7 @@ const recipeStore = useRecipeStore();
 @import "../assets/variables.scss";
 
 header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   height: 70px;
   padding-inline: 2rem;
   color: $main-color;

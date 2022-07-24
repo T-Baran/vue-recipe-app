@@ -14,14 +14,8 @@ const state = reactive({
 });
 
 const recipeStore = useRecipeStore();
-function test() {
-  console.log(recipeStore.calories);
-}
 
 function compareCalories() {
-  // console.log("porównać");
-  // console.log(recipeStore.calories[0]);
-  // console.log(recipeStore.calories[1]);
   if (recipeStore.calories[0] >= recipeStore.calories[1]) {
     state.showAlert = true;
     recipeStore.stopSearch = true;
@@ -41,22 +35,24 @@ function compareCalories() {
       <fa v-if="state.showMenu" class="icon" icon="angles-up" />
       <fa v-else class="icon" icon="angles-down" />
     </div>
-    <div v-if="state.showMenu" class="inputs">
-      <input
-        type="number"
-        v-model="recipeStore.calories[0]"
-        @keydown.enter.prevent
-        @input="compareCalories()"
-        min="0"
-      />
-      <input
-        type="number"
-        v-model="recipeStore.calories[1]"
-        @keydown.enter.prevent
-        @input="compareCalories()"
-        min="0"
-      />
-    </div>
+    <transition name="fade">
+      <div v-if="state.showMenu" class="inputs">
+        <input
+          type="number"
+          v-model="recipeStore.calories[0]"
+          @keydown.enter.prevent
+          @input="compareCalories()"
+          min="0"
+        />
+        <input
+          type="number"
+          v-model="recipeStore.calories[1]"
+          @keydown.enter.prevent
+          @input="compareCalories()"
+          min="0"
+        />
+      </div>
+    </transition>
     <p v-if="state.showAlert" class="alert">
       Second value must be greater than first!
     </p>
@@ -75,9 +71,7 @@ function compareCalories() {
   }
 }
 .title-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   grid-column: span 2;
   gap: 1rem;
   margin-bottom: 1rem;
@@ -86,7 +80,6 @@ function compareCalories() {
     justify-self: center;
     color: $main-color;
     font-size: 24px;
-    /* margin-bottom: 1rem; */
   }
   .icon {
     color: $main-color;
@@ -98,7 +91,6 @@ function compareCalories() {
   align-items: center;
   gap: 1rem;
   grid-column: span 2;
-  /* flex-grow: 1; */
 
   input {
     font-size: 16px;
@@ -124,5 +116,17 @@ input::-webkit-inner-spin-button {
 }
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+.fade-enter-active {
+  transition: opacity 0.5s ease;
+}
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onBeforeMount } from "vue";
+import { reactive } from "vue";
 import RecipeComponent from "./RecipeComponent.vue";
 
 const state = reactive({
@@ -14,12 +14,9 @@ const props = defineProps({
 async function fetchRecipe() {
   const res = await fetch(props.recipe.url);
   const data = await res.json();
-  console.log(data);
   state.data = data;
   state.hidden = false;
 }
-
-console.log(props.recipe);
 </script>
 <template>
   <div v-if="state.hidden" class="container">
@@ -62,9 +59,7 @@ console.log(props.recipe);
   width: 300px;
 }
 .details {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   gap: 10px;
   color: $main-color3;
   cursor: pointer;

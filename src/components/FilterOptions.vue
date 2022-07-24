@@ -1,5 +1,4 @@
 <script setup>
-import { reactive } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import FilterItem from "./FilterItem.vue";
 import CaloriesItem from "./CaloriesItem.vue";
@@ -36,9 +35,6 @@ const healthType = [
   "vegetarian",
   "wheat-free",
 ];
-// function print() {
-//   console.log(recipeStore.calculateFilter);
-// }
 </script>
 <template>
   <div>
@@ -60,8 +56,7 @@ const healthType = [
 </template>
 <style scoped lang="scss">
 @import "../assets/variables.scss";
-div {
-}
+
 button {
   border: none;
   background-color: $main-color;

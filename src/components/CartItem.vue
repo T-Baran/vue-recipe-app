@@ -76,7 +76,6 @@ function removeFromCart() {
     padding: 0;
     width: 300px;
     margin-bottom: 2rem;
-    /* width: Min(80%, 400px); */
   }
 }
 .title-container {
@@ -88,7 +87,6 @@ function removeFromCart() {
   padding-bottom: 0.5rem;
   border-bottom: 3px solid $main-color;
   cursor: pointer;
-  /* width: 100%; */
 }
 .title-center {
   @include flexCenter;
@@ -104,9 +102,7 @@ function removeFromCart() {
   overflow-wrap: anywhere;
 }
 .edit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   gap: 1rem;
   color: $main-color;
   margin: 1rem 0;

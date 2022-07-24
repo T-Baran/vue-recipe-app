@@ -11,7 +11,6 @@ const state = reactive({
 function addList() {
   recipeStore.addToCart(state.name, []);
   state.name = "";
-  console.log("coś powinno sie pokazać");
 }
 </script>
 <template>
@@ -25,9 +24,7 @@ function addList() {
 @import "../assets/variables.scss";
 
 form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flexCenter;
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 2rem;

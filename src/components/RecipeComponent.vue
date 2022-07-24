@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onUpdated, onMounted, onUnmounted, watch } from "vue";
+import { reactive, onMounted } from "vue";
 import { useRecipeStore } from "../stores/recipes";
 import ModalDelete from "./ModalDelete.vue";
 
@@ -21,8 +21,6 @@ const props = defineProps({
   shorten: Boolean,
   token: String,
 });
-
-// console.log(props.token);
 
 function addToLiked() {
   if (state.like) {
@@ -73,7 +71,7 @@ onMounted(() => {
     state.cart = true;
   }
   if (props.shorten && state.windowWidth) {
-    if (props.data.recipe.ingredientLines.length >= 4) {
+    if (props.data.recipe.ingredientLines.length > 4) {
       state.newIngredientList = props.data.recipe.ingredientLines.slice(0, 4);
       state.shortened = true;
     } else {
@@ -235,9 +233,8 @@ onMounted(() => {
   background-color: $main-color;
 }
 .data-container {
-  display: flex;
+  @include flexCenter;
   flex-direction: column;
-  align-items: center;
   gap: 1.5rem;
   padding: 2rem 1rem;
 }
@@ -286,9 +283,6 @@ onMounted(() => {
   p {
     margin-bottom: 0.5rem;
     text-align: center;
-  }
-  li {
-    /* list-style-position: inside; */
   }
 }
 .ingredients-header {
